@@ -1,17 +1,17 @@
 ---
 layout: page
-title: About
-permalink: /about/
+title: 프로필
+permalink: /프로필/
 main_nav: true
 ---
 
 ![alt text]({{ site.baseurl }}/assets/profile-placeholder.gif "Profile Picture"){:.profile}
 
-Centrarium is a custom theme for Jekyll, made by [Ben Centra][bencentra] for his own blog. He'd be humbled if you liked it enough to use it as well! Installation and configuration instructions can be found in the [GitHub repository](https://github.com/bencentra/centrarium).
+개발자 지망생이며, 공부를 하며 알게 된 것들을 기록해보자는 취지에서 시작한 블로그입니다.
+현재 쓰고있는 Jekyll 테마는 Centrarium 이며 [Ben Centra][bencentra] 블로그에서 만나보실 수 있습니다.
+[GitHub repository](https://github.com/bencentra/centrarium) 다운받아 보고 싶으신 분들은 이 링크가 도움이 될 듯 합니다.
 
-This page is a good place to write about yourself, your project, your product, or whatever it is your site is for. You can replace the image above, or you can get rid of it entirely. 
-
-You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/). And you can find the source code for Jekyll at [github.com/jekyll/jekyll](https://github.com/jekyll/jekyll)
+더 커스터 마이징을 하고 싶은 분들은 Jekyll documentation [jekyllrb.com](http://jekyllrb.com/) 와 오픈소스 [github.com/jekyll/jekyll](https://github.com/jekyll/jekyll)를 참고하시면 될 것 같습니다.
 
 [centrarium]: https://github.com/bencentra/centrarium
 [bencentra]: http://bencentra.com

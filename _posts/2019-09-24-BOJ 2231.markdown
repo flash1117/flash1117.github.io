@@ -1,0 +1,68 @@
+---
+layout: post
+title:  "BOJ 2231"
+date:   2019-09-14 23:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	BOJ 2231 알고리즘
+cover:  "/assets/algorithm.png"
+---
+
+# 알고리즘
+
+```
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+#define Endl "\n"
+
+int N;
+// N 이 주어졌을때, 가장 작은 생성자 구하기
+
+int getCreateNum() {
+
+	for (int i = 1; i < N; i++) {
+
+		int buf = 0, q = 0;
+		buf += i;
+
+		q = i;
+		while (1) {
+
+			buf += q % 10;
+			q /= 10;
+
+			if (q < 1) break;
+
+		}
+		if (buf == N) return i;
+	}
+
+	return -1;
+}
+
+
+int main() {
+
+	cin >> N;
+	int ret = getCreateNum();
+
+	if (ret == -1)
+		cout << 0 << Endl;
+	else
+		cout << ret;
+
+	return 0;
+}
+```
+
+처음 구현을 했을 때, vector 로 백만개의 배열을 선언해서 1부터 순회하며  값을 집어넣고 vector 의 N 번째의 첫번째 원소를 출력하려고 했었다.
+
+왜 그렇게 무식하게 짰는지 모르겠지만, 그 결과 런타임에러가 발생했었고, 내 생각에는 아마 배열의 크기가 초과되서 그런 문제가 발생한 것이 아닌가 싶다.
+
+위에 코드는 최종적으로 고친 코드이며, 배열의 크기에 관해 찾아봤더니
+
+``` char 배열 최대크기는 약 100만 정도, int 의 배열크기는 25만 vector의 push_back 최대 크기는 약 십억 정도라고 한다.
+만약 최대 범위가 백만 이상이 되면 전역변수로 최대 크기를 설정하기 보단 동적할당이나 다른 방식의 알고리즘을 짜는 것이 좋다고 한다. ```

@@ -9,7 +9,7 @@ exclude:
   - "/vendor/"
 
 # Site settings
-title: Be::Developer
+title: Be :: Developer
 subtitle: "A simple blog for self-develop"
 email: mollangzzang@gmail.com
 name: KiTae Kim

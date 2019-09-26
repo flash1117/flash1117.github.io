@@ -25,7 +25,10 @@ bool 타입으로 더 이상 다음 순열을 찾을 수 없을 경우 false 를
 먼저 사용할 API의 주소는 [Link](https://twilio.com) 이다.
 
 회원가입을 하고 문자를 보낼 수 있도록 약 15달러의 금액을 받게 된다.
-![photo](\blogPicture\Message_API.png)
+<a href="C:\flash1117.github.io\_posts\blogPicture\Message_API" data-lightbox="falcon9-large" data-title="">
+  <img src="C:\flash1117.github.io\_posts\blogPicture" title="python message">
+</a>
+
 
 위와 같은 화면이 나오게 되며,
 
@@ -52,6 +55,8 @@ print(message.sid)
 account_sid 와 auth_token 은 발급 받았던 아이디와 비밀번호로 바꾸어 주어야 하며
 from 부분에 발급받은 전화번호를 넣고 to 로는 보내고 싶은 상대방의 전화번호를 삽입하면 사용 할 수 있게된다. 주의할 점은 한국은 82로 시작하니 +82 로 시작해야 한다는 것과 010 ---- 로 전화번호가 나열 되게 되는데 첫 0 은 생략하고 전화번호를 입력해야 한다는 것이다.
 
-![photo](\blogPicture\Phone_Message.png)
+<a href="C:\flash1117.github.io\_posts\blogPicture\Phone_Message.png" data-lightbox="falcon9-large" data-title="">
+  <img src="C:\flash1117.github.io\_posts\blogPicture\Phone_Message.png" title="python message">
+</a>
 
 정상적으로 작동했다면 위와 같은 문자가 폰으로 전송되게 된다.

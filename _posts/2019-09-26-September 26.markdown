@@ -1,0 +1,19 @@
+---
+layout: post
+title:  "2019-09-26 TIL"
+date:   2019-09-26 00:00:59
+author: mollangzzang
+categories: TIL
+tags:	Today I Learned
+cover:  "/assets/TIL.png"
+---
+
+# Algorithm
+
+C++11이후에서 제공되는 라이브러리 중`#include <algorithm>`에 포함된 함수 중 `next_permutation` 함수가 있다.
+
+bool 타입으로 더 이상 다음 순열을 찾을 수 없을 경우 false 를 반환하게 되는데, 매개변수로는 양방향 반복자의 시작과 끝을 넣어주면 된다.
+
+다만 주의할 점으로는 `next_permutation`을 사용하기전에 `sort` 함수로 정렬을 해주어야 한다는 점이다. 이유는 인자로 넘어왔을 때의 상황을 보고 다음 순서에 해당하는 순열을 반환해 주기 때문에 정렬되지 않은 `container`를 조작할 경우 모든 순열을 반환받을 수 없기 떄문이다.
+
+또한 `next_permutation` 함수를 이용하는 도중 반복문 안에서 서로의 값을 변경한다거나 삽입, 삭제 등이 일어나지 않아야 한다.

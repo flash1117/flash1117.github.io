@@ -9,12 +9,12 @@ exclude:
   - "/vendor/"
 
 # Site settings
-title: Be :: Developer
+title: Just Keep Going!
 subtitle: "A simple blog for self-develop"
 email: mollangzzang@gmail.com
 name: KiTae Kim
 description: >
-  A simple blog for self-develop.
+  꾸준함을 위한 자기계발 블로그
 # Base URL of site (i.e. /blog). It should always start with a slash,
 # and never end with a slash. Set it to a blank value if hosting at the
 # root of your server.

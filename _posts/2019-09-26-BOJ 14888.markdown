@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "BOJ 2231"
-date:   2019-09-25 23:00:59
+title:  "BOJ 14888"
+date:   2019-09-24 23:00:59
 author: mollangzzang
 categories: Algorithm
 tags:	BOJ 14888 알고리즘

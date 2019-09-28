@@ -73,7 +73,7 @@ int solve() {
 	q.push({ r,c,d });
 
 	while (!q.empty()) {
-		//print();
+	//	print();
 		int curX = q.front().x;
 		int curY = q.front().y;
 		int curDir = q.front().dir;
@@ -82,9 +82,8 @@ int solve() {
 
 		for (int i = 0; i < 4; i++) {
 
-			if(i != 0)
-				curDir = nextDir(curDir);
-
+			curDir = nextDir(curDir);
+				
 			int nextX = curX + dx[curDir];
 			int nextY = curY + dy[curDir];
 
@@ -128,4 +127,6 @@ int main() {
 ```
 
 처음엔 DFS로 구현하다가 너무 헷갈려서 BFS로 구현하기 시작했다.
-왼쪽 방향부터 순회를 해야하는데, 현재 i 부분에 문제가 있어서 좀더 시간을 들여서 구현해야 할 것 같다.
+<u>왼쪽 방향부터 순회를 해야하는데, 현재 i 부분에 문제가 있어서 좀더 시간을 들여서 구현해야 할 것 같다. </u>
+
+2019.09.28 코드 수정 어제는 왜 애를 먹었는지 모를정도로 쉽게 고쳤다. 시뮬레이션 문제는 구현보다 문제를 이해하지 못해서 애를 먹는 경우가 훨씬 많은 것 같다.

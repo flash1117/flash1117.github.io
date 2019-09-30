@@ -4,7 +4,7 @@ title:  "BOJ 14503"
 date:   2019-09-27 13:00:59
 author: mollangzzang
 categories: Algorithm
-tags:	BFS DFS SWExpert BOJ 14503
+tags:	BFS DFS SWExpert BOJ 14503 Simulation
 cover:  "/assets/algorithm.png"
 ---
 

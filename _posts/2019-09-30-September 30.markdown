@@ -1,0 +1,31 @@
+---
+layout: post
+title:  "2019-09-30 TIL"
+date:   2019-09-30 08:00:59
+author: mollangzzang
+categories: TIL
+tags:	Today I Learned
+cover:  "/assets/TIL.png"
+---
+
+# Web
+
+## back-end
+
+백엔드라고 하면 시스템의 구축, 데이터베이스 설계, 데이터 처리, 내부 로직 등을 담당하게 되는데, 오래된 언어는 JSP ASP PHP가 상당히 오래됨. 그러나 병렬처리가 아니라 시분할 처리 방식이기 떄문에, 클라이언트가 많이 모이게 되면 처리하는데 상당히 힘이들게 된다.
+
+또한 jsp 기반 프로젝트를 시작하게 되면 중간 다리가 많아서 빅데이터랑 연관해서 프로젝트 진행이 어렵다. 그런의미에서 남은 대체 언어로는 node.js 와 python이 있다.
+
+node.js - 자체적으로 병렬처리를 지원해서 관계형 DB 뿐 아니라 NoSQL 예를 들어 mongoDB 같은 데이터베이스랑 연동도 편하고 , 컴퓨터의 코어가 많을 수록 쓰레드 발생이 많이되서 처리 속도가 더 빠르다.
+
+python  - 통계적 결과에 굉장히 강하기 때문에 AI , 머신 러닝을 이용한 프로젝트에는 python 만한게 없다. 불과 몇년전까지만 해도 AI는 몇백년 뒤에 SF영화에서나 구현할 법한 상상의 산물이였지만 당장 알파고등으로 인해서 우리나라에 급부상하게 되었다.
+여담으로, 알파고는 바둑 데이터를 학습 할만큼 해서 신약개발 분야등에 쓰이고 있다고 한다.
+
+## Framework - Flask (Python)
+
+python 으로 framework 를 이용할때 가장 많이 비교 되는 것이 Django 와 Flask 인 것 같다.
+
+Django 는 기능이 매우 강력하다. Web application 을 개발하는데, 대부분의 기능을 제공하기 때문에 규모가 있는 application 도 충분히 Django로 개발이 가능하다고 한다.
+실제로 instagram 의 application 서버, Pinterest 의 application layer 은 Django , web server 는 node.js로 구현 했다고 한다.
+
+Flask는 매우 가볍고 심플한 Framework 를 지향하는 것이 특징이다. 사용자 입맛대로 원하는 것을 추가하면서 만들어 나가는 재미가 있다. Flask 를 채용한 회사는 Linked-in이 있다. 또한 Pinterest의 API 기능 개발 위주 와 Twilio 의 API는 Flask로 만들었다고 하니 Flask 는 API 개발에 좋은 것 같다.

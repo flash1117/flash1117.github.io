@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "2019-09-30 TIL"
-date:   2019-09-30 23:00:59
+date:   2019-09-30 13:00:59
 author: mollangzzang
 categories: TIL
 tags:	Today I Learned

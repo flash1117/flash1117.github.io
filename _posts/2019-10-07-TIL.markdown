@@ -37,3 +37,6 @@ cover:  "/assets/TIL.png"
 8. `str.empty()` string 이 비어있는지 확인하는 함수이다.
 
 9. 파일을 읽을 때 유용한 함수로, 곧 n 만큼의 string이 추가 될 꺼니까 그에 맞는 capacity를 미리 할당해주는 역할을 해주는데, `str.reserve(n)` 과 같은 식으로 사용한다. capacity가 꽉찼을 때 계속해서 호출하는 사태를 예방해서 성능저하를 예방하게 된다.
+
+10. C에서는 atoi 함수로 문자를 숫자로 바꾸었지만, string 형 같은 경우는 번거롭게 되는데, 이 떄 사용할 함수로 string to int 가 가능하다.
+`stoi : string to int , stof : string to float , stol : string to long , stod : string to double`

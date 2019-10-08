@@ -1,0 +1,85 @@
+---
+layout: post
+title:  "BOJ 1551"
+date:   2019-10-08 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	BOJ 1551 Simulation
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <vector>
+#include <iterator>
+
+using namespace std;
+
+int N, K;
+int res[21];
+
+template<typename Out>
+void split(const string& s, char delim, Out result) {
+
+	stringstream ss(s);
+	string item;
+
+	while (getline(ss, item, delim))
+		* (result++) = item;
+}
+
+vector<int> split(const string& s, const char delim) {
+
+	vector <string> elems;
+	split(s, delim, back_inserter(elems));
+
+	vector <int> ret;
+
+	for (int i = 0; i < elems.size(); i++)
+		ret.push_back(stoi(elems[i]));
+	
+	return ret;
+}
+
+void solve(vector<int>& vec) {
+
+	int arraySize = vec.size();
+
+	for (int i = 0; i < K; i++) {
+
+		for (int j = 0; j < arraySize - 1; j++) {
+
+			vec[j] = vec[j + 1] - vec[j];
+		}
+
+		arraySize--;
+	}
+
+	for (int j = 0; j < arraySize; j++) {
+
+		cout << vec[j];
+		if (j != arraySize - 1) cout << ",";
+		else cout << "\n";
+
+	}
+}
+
+int main() {
+
+	string input;
+	cin >> N >> K;
+	cin >> input;
+
+	vector <int> vec = split(input, ',');
+
+	solve(vec);
+
+	return 0;
+
+}
+
+```
+
+입력 받는 방식이 매우 귀찮았다.. C# 에서 처럼 split을 지원하지 않으므로 stackoverflow 에 구현되어있는 split 함수를 참조 했다. 뭔가 메모리를 낭비한 느낌인데, `sstream` 과 `template` 부분은 다시 공부해봐야 할 것 같다. 그걸 제외하고는 간단한 문제였는데, for문 안에서 `j+1` 로 참조하는 것 말고 참조하는 방식이 있는 코드가 있는지 살펴 봐야 할 것 같다.

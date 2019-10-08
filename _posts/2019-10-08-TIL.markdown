@@ -1,0 +1,23 @@
+---
+layout: post
+title:  "2019-10-08 TIL"
+date:   2019-10-08 13:00:59
+author: mollangzzang
+categories: TIL
+tags:	TIL
+cover:  "/assets/TIL.png"
+---
+
+### JSP
+
+- JSP는 Java Server Pages 의 약자로 서블릿 이라고 하는 자바 웹 프로그래밍 기법에 기반을 두고 있다. 따라서 HTML 내에 자바 코드를 삽입하여 **웹 서버에서 동적으로 웹 브라우저를 관리하는 언어**라고 할 수 있다. 
+
+- 반면 JavaScript는 웹에서 바로 동적인 구현이 가능한 언어.
+
+- 파일의 확장자는 **.jsp** 이다.
+
+- 웹 서버에서 동적으로 웹 페이지를 생성하여 HTML로 응답한다.
+
+- MVC 패턴에서 View 의 역할을 맡고 있다.
+
+

@@ -30,6 +30,7 @@ cover:  "/assets/TIL.png"
         - 23가지의 디자인 패턴을 정리하고 각각의 디자인 패턴을 생성 (Creational), 구조 (Structural) , 행위(Behavioral) 3가지로 분류한다.
 
 - **GoF 디자인 패턴의 분류**
+
     |생성(Creational) 패턴|구조(Structural)패턴|행위(Behavioral) 패턴|
     |:---:|:---:|:---:|
     |추상팩토리(Abstract Factory)|어댑터(Adapter)|책임 연쇄 (Chain of Responsibility)|

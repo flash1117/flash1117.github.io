@@ -1,0 +1,9 @@
+---
+layout: post
+title:  "2019-10-13 TIL"
+date:   2019-10-13 13:00:59
+author: mollangzzang
+categories: TIL
+tags:	TIL
+cover:  "/assets/TIL.png"
+---

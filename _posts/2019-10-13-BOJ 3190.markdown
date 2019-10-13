@@ -1,0 +1,118 @@
+---
+layout: post
+title:  "BOJ 3190"
+date:   2019-10-13 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	BOJ 3190 Simulation
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+#include <vector>
+#include <deque>
+
+using namespace std;
+
+int N, K, X;
+int map[101][101];
+vector <pair<int, char>> vec;
+
+int dx[] = { 0,1,0,-1 };
+int dy[] = { 1,0,-1,0 };
+
+typedef struct {
+	int x, y, dir;
+}pos;
+
+int setDir(int curDir, char rot) {
+
+	if (rot == 'D') { // 오른쪽
+		if (curDir != 3) return curDir + 1;
+		else return 0;
+	}
+	else if (rot == 'L') // 왼쪽
+	{
+		if (curDir != 0) return curDir - 1;
+		else return 3;
+	}
+	return -1;
+}
+
+bool isBoundary(int x, int y) {
+
+	if (x<0 || y< 0 || x>N - 1 || y>N - 1) return false;
+	return true;
+
+}
+
+bool isExist(deque <pos>& dq, int nextX, int nextY) {
+
+	for (int i = 0; i < dq.size(); i++) 
+		if (nextX == dq[i].x && nextY == dq[i].y) return true;
+	return false;
+}
+
+int solve() {
+
+	int time = 0, index = 0;
+	deque <pos> snake;
+	snake.push_front({ 0,0,0 });
+
+	while (!snake.empty()) {
+
+		time++;
+		int Dir = snake.front().dir;
+		
+		if (index < vec.size() && time-1 == vec[index].first) 
+			Dir = setDir(Dir, vec[index++].second);
+			
+		int nextX = snake.front().x + dx[Dir];
+		int nextY = snake.front().y + dy[Dir];
+
+		if (isExist(snake, nextX, nextY) || !isBoundary(nextX, nextY)) return time;
+
+		if (map[nextX][nextY] == 1) 
+			map[nextX][nextY] = 0;
+		else snake.pop_back();
+
+		snake.push_front({ nextX,nextY,Dir });
+
+	}
+
+	return time;
+}
+
+int main() {
+
+	int appleX, appleY;
+	int time;
+	char dir;
+	cin >> N >> K;
+	for (int i = 0; i < K; i++)
+	{
+		cin >> appleX >> appleY;
+		map[appleX-1][appleY-1] = 1;
+	}
+	cin >> X;
+	for (int i = 0; i < X; i++) {
+		cin >> time >> dir;
+		vec.push_back(make_pair(time, dir));
+	}
+
+	cout << solve();
+
+	return 0;
+}
+```
+
+어릴 때 했던 뱀 게임을 구현하는 문제였다. 사과가 있는 좌표를 주고 먹을 때마다, 몸이 커지고 뱀의 머리가 꼬리에 닿거나 벽에 닿으면 죽게 되는데, 그 때가 게임 시작하고 몇초가 지났는지 출력하는 문제였다.
+
+이 문제를 풀면서 애를 먹었던 건 수일치 였다.
+
+1. 처음에 사과의 좌표를 받으면서, 1행 1열 부터 시작한다는 것을 고려했어야 했는데 그 부분을 등한시 해서 오차가 생겼었다.
+2. time ++ 를 반복문을 시작하면서 줬었는데, 1초 차이 가량으로 원하는 값과 다르게 나왔었다. 사실 이 부분은 아직도 문제를 완벽히 이해하고 고친 것은 아닌거 같다. 틀릴 부분이 여기 밖에 없어서 고친 그런 느낌..
+3. 백준에서 테스트 케이스를 2번과 3번을 굉장히 유사하게 줬는데, 다른점은 사과의 갯수이다. 1번과 2번을 해결하고 돌렸는데, 2번 테케와 3번 테케가 동일한 21의 값이 나왔었다. 다시 문제를 읽어보니 주어진 조건의 우선순위가 뱀의 머리를 늘리는 것이였다. 그래서 코드의 우선순위를 변경하니 해결되었다.
+
+수일치의 부분과 우선순위를 잘 정하고 문제를 푸는 연습을 좀 더 해야할 것 같다.

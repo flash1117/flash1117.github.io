@@ -1,0 +1,29 @@
+---
+layout: post
+title:  "2019-07-07 TIL"
+date:   2019-07-07 13:00:59
+author: mollangzzang
+categories: TIL
+tags:	TIL
+cover:  "/assets/TIL.png"
+---
+
+cstdio는 C standard input and output의 약자로 stdio.h 와 하는 일이 같다.
+
+가령, printf  scanf  fprintf  fscanf  fopen ... 등등
+
+두 헤더파일의 차이점을 들자면 기능상의 차이는 없으나 stdio.h 는 global namespace를 사용하고
+
+cstdio는 std라는 namespace를 사용한다는 점이다.
+
+iostream은 입/출력을 수행하기 위한 모든 C++ stream 들을 포함한 헤더파일이다.
+
+사용한다고 한다면 iostream을 사용하는 것이 더 안전하다.
+
+ - type-safe : iostream은 compiler가 I/O되는 객체의 형식을 static하게 알 수 있습니다. 그러나 cstdio는 %를 써서 type을 dynamic하게 알아냅니다.
+
+- 에러 : cstdio는 %를 쓰기 때문에 형식지정자가 실제로 I/O할 객체와 일치해야합니다. iostream은 % 토큰을 쓰지 않기 때문에 error를 줄일 수 있습니다.
+
+- 확장성 : iostream은 기존의 코드를 바꾸지 않고 유저가 정의한 타입을 I/O할 수 있습니다.
+
+- 상속성 : iostream 메커니즘은 std::ostream이나 std:istream같은 real class로부터 만들어졌기 때문에 cstdio의 FILE*과는 달리 상속이 가능합니다. 따라서 유저가 직접 stream을 정의해서 작동시킬 수 있습니다.

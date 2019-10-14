@@ -1,0 +1,177 @@
+---
+layout: post
+title:  "2019-08-18 TIL"
+date:   2019-08-18 13:00:59
+author: mollangzzang
+categories: TIL
+tags:	TIL Spring
+cover:  "/assets/TIL.png"
+---
+
+### 1) 주요 구성 요소
+
+- IoC / DI
+
+- AOP
+
+- PSA
+
+* PSA : Portable Service Abstractions 의 줄임말로 서비스 추상화를 뜻한다.
+
+- 성격이 비슷한 여러 종류의 기술을 추상화하고 이를 일관된 방법으로 사용할 수 있도록 지원
+
+- 트랜잭션 서비스 추상화 : 여러 가지의 DB를 사용한다고 하면 Global Transaction 방식을 사용
+
+자바는 JDBC 외에 이런 글로벌 트랜잭션을 지원하는 트랜잭션 매니저를 지원하기 위한 API인 JTA 를 제공
+
+- 높은 응집도와 낮은 결합도를 준수
+
+### 2) DI (Dependency Injection, 의존성 주입)
+
+DI는 스프링을 통해서 생겨난 용어는 아니나, DI를 잘 지원해주는 것이 스프링이다.
+
+- 일체형
+
+`Sphone a = new Sphone();`
+
+- 분리 / 도킹(부착) 형
+
+`Battery b  = new Battery();`
+`Sphone a = new Sphone();`
+
+`a.setBattery(b)` - a 객체가 다른 녀석이 만든 b 객체를 사용
+
+-> 분리 / 도킹 형으로 개발 하게 되면 각 객체간의 결합도를 낮출 수 있으며,
+
+DI를 사용하는 목적이 이러한 결집도를 낮추기 위함.
+
+#### 2-1) DI의 종류
+
+- setter injection
+```
+B b = new B();
+A a = new A();
+a.setB(b);
+```
+
+- construction injection
+```
+B b = new B();
+A a = new A(b);
+```
+
+#### 2-2) DI 구현
+
+Java (DI) :  // property 항목은 실제 값을 record 에 바로 주입하는 것이 아닌 setRecord() 함수를 호출하여 주입함.
+```
+Record record = new SprRecord();
+
+RecordView view = new SprRecordView();
+
+view.setRecord(record); // injection
+
+view.input();
+
+view.print();
+```
+
+XML ( Spring DI ) : 객체 생성 시 패키지 명을 포함한 풀 클래스 네임 작성
+
+XML에 작성된 명세서를 보고, IoC 컨테이너가 각 객체를 생성하고 , 값을 주입해 줌.
+
+여기서 ApplicationContext 가 IoC Container 역할을 함.
+
+**XML ( Spring DI ) config.xml**
+
+`<bean id = "record"  class = "di.SprRecord"> </bean>` // 빈 객체 생성
+`<bean id = "view" class = "di.SprRecordView">` // 빈 객체 생성
+    `<property name = "record" ref = "record"></property>` // setRecord() 호출
+`</bean>`
+
+**Java**
+
+// XML 을 파싱하여 컨테이너에 담는 작업
+
+ApplicationContext ctx = new ClassPathXmlApplicationContext("config.xml");
+
+RecordView = (RecordView) ctx.getBean("view");
+
+ 
+* XML 을 활용하는 경우는 view 에 대한 객체만을 요청 했을 뿐, 실제 내부적인 사항은 JAVA 코드 상에 드러나지 않음
+
+* 새로운 클래스의 bean객체를 만들어 XML에 주입만 시켜줘도, 기존 소스 변경 없이 새로운 형태의 객체 적용이 가능함.
+
+#### 2-3) XML (Bean) Sample
+
+- Bean 객체는 반드시 클래스를 사용, 인터페이스나 추상클래스는 객체 생성이 불가능함
+
+- 빈 객체 생성 , 객체 초기화 , 객체 값( 또는 레퍼런스 ) 주입.
+
+**XML ( Spring DI ) config.xml**
+
+1)
+```
+<bean id = "record" name = "r1,r2,r3:r4" class = "di.SprRecord">
+
+    <property name = "kor" value = "20"></property>
+
+</bean>
+```
+
+이름이 record 인 빈 객체 생성 / 별명 4개 : r1, r2, r3, r4 / SprRecord 클래스 객체 생성
+
+초기값으로 kor 라는 프로퍼티에 20 값 대입 ( set 함수가 존재해야 위와 같은 프로퍼티 설정 가능 )
+
+ 
+
+2)
+```
+<bean id = "record" name = "r1,r2,r3:r4" class = "di.SprRecord">
+
+    <constructor-arg value = "20"></constructor-arg>
+
+</bean>
+```
+ 
+
+이름이 record 빈 객체 생성 / 생성자(인자가 하나인)을 통해서 값 대입 & 생성
+
+3)
+```
+<bean id = "record" name = "r1,r2,r3:r4" class = "di.SprRecord">
+
+    <constructor-arg name = "kor" value = "20"></constructor-arg>
+
+</bean>
+```
+
+생성자 중에서 kor 값을 입력받는 생성자를 통해서 20값 대입하고, 생성 
+
+4)
+```
+<bean id = "record" name = "r1,r2,r3:r4" class = "di.SprRecord"
+
+    p:kor="50" p:eng="60" p:math="70">
+```
+3개의 인자를 받는 생성자를 통해 kor = 50 , eng = 60 , math = 70 대입 & 생성
+
+5)
+```
+<bean id="view" class = "di.SprRecordView">
+
+    <property name = "record" ref = "record"></property>
+
+</bean>
+```
+
+생성된 record 객체를 set함수를 통해 프로퍼티에 저장하고 SprRecordView 생성.
+
+**id** : 빈 객체의 고유 이름 ( 접근 가능자)
+
+**name** : 객체 이름 ( 별칭 )
+
+**class** : 생성할 클래스
+
+**constructor-arg** : 초기값 설정 ( 생성자 함수 사용 )
+
+**property** : 초기값 설정 ( Setter 함수 사용 )

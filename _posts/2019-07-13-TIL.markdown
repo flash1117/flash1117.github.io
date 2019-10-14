@@ -1,0 +1,15 @@
+---
+layout: post
+title:  "2019-07-13 TIL"
+date:   2019-07-13 13:00:59
+author: mollangzzang
+categories: TIL
+tags:	TIL
+cover:  "/assets/TIL.png"
+---
+
+primitive 타입은 int 와 같은 일반적인 변수 타입이다.
+
+반면에 object 타입은 객체인 클래스이며 int 대신 integer 와 같이 표시된다.
+
+자바에서는 toString 과 같은 멤버 함수를 지원하게 되는데, primitive 타입에서는 객체가 아니므로 이러한 함수를 사용할 수가 없다. 그럼에도 primitive 타입이 사용되는 이유는 object 에 비해 메모리를 적게 사용한다는 장점이 있기 때문이다.

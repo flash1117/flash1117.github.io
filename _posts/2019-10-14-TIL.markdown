@@ -1,0 +1,51 @@
+---
+layout: post
+title:  "2019-10-14 TIL"
+date:   2019-10-14 13:00:59
+author: mollangzzang
+categories: TIL
+tags:	TIL Java
+cover:  "/assets/TIL.png"
+---
+
+### Hello World! UI 띄우기 ( Desktop Application )
+
+```
+import javax.swing.*;   
+import java.awt.Dimension;
+import java.awt.Toolkit;
+public class HelloWorldGUIApp{
+    public static void main(String[] args){
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                JFrame frame = new JFrame("HelloWorld GUI");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setPreferredSize(new Dimension(800, 300));
+                JLabel label = new JLabel("Hello World!!", SwingConstants.RIGHT);
+                frame.getContentPane().add(label);
+                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+                frame.setLocation(dim.width/2-400/2, dim.height/2-300/2);
+
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
+    }
+}
+```
+
+### GET, Post Method
+
+* HTTP 프로토콜을 이용해서 서버에 데이터 (요청 정보)를 전달할 때 사용하는 방식
+* GET Method 방식
+    - 개념
+        - 정보를 조회하기 위한 메서드
+        - 서버에서 어떤 데이터를 가져와서 보여주기 위한 용도의 메서드
+        - 가져오는 것(Select)
+    - 사용 방법
+        - URL의 끝에 **?** 가 붙고, 요청 정보가 (Key = value) 형태의 쌍을 이루어 ? 뒤에 붙어서 서버로 전송한다.
+        - 요청 정보가 여러 개일 경우에는 **&** 로 구분한다.
+        - `www.urladdress.xyz?name1=value1&name2=value2`
+    - 특징
+        - URL에 요청 정보를 붙여서 전송한다.
+        - URL에 요청 정보가 이어 붙기 때문에 길이 제한이 있어서 대용량의 데이터를 전송하기 어렵다.

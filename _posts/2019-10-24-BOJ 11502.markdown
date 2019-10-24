@@ -1,0 +1,48 @@
+---
+layout: post
+title:  "BOJ 11052"
+date:   2019-10-24 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm DynamicProgramming 동적계획법
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+
+using namespace std;
+
+int N;
+int input[1001];
+int dp[1001];
+
+void solve() {
+
+	dp[1] = input[1];
+	dp[2] = (2 * input[1] > input[2]) ? 2 * input[1] : input[2];
+
+	for (int i = 3; i <= N; i++) {
+
+		for (int j = i; j >= 0; j--) 
+			dp[i] = (dp[i - j] + input[j] > dp[i]) ? dp[i - j] + input[j] : dp[i];
+		
+
+	}
+
+	cout << dp[N];
+}
+
+int main() {
+
+	cin >> N;
+	for (int i = 1; i <= N; i++)
+		cin >> input[i];
+
+	solve();
+
+	return 0;
+}
+```
+
+dp 배열에는 그 상황에 있어서 가장 최댓값만이 들어 가기 떄문에 이중 for 문을 돌면서 생길 수 있는 경우의 수들을 비교해주었다.

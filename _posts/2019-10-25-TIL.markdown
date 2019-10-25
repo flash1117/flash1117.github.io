@@ -1,0 +1,40 @@
+---
+layout: post
+title:  "Java 문법"
+date:   2019-10-25 13:00:59
+author: mollangzzang
+categories: TIL
+tags:	TIL Java
+cover:  "/assets/TIL.png"
+---
+
+#### Java Data Type
+
+- **기본형 (Primitive Type)**
+
+    - boolean, char, byte, short, int, long, float, double
+    - 실제 값을 저장하게 됨
+
+- **참조형 (Reference Type)**
+
+    - 기본형을 제외한 나머지로 String, System 등이 있다.
+    - 객체의 주소를 저장한다. (4 byte)
+
+#### 변수의 선언 방법
+
+`int score = 100;`
+`String str = new String("abc");`
+`str = null`
+
+#### 변수 명명 규칙 (Naming Convention)
+
+1. 대소문자가 구분되며 길이에 제한이 없다.
+    - True 와 true는 서로 다른 것
+
+2. 예약어 (Reserved word) 를 사용해서는 안된다.
+    - true 는 예약서라 사용할 수 없지만, True는 가능하다.
+
+3. 숫자로 시작해서는 안된다.
+
+4. 특수문자는 **_** 와 **$** 만을 허용한다.
+

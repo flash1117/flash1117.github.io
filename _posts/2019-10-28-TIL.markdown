@@ -162,3 +162,323 @@ class Triangle extends Shape {
 
 `그 외 - static, final, abstract , native, transient, synchronized, volatile, strictfp`
 
+#### static
+
+- static 이 사용 가능한 곳 : 멤버변수 , 메서드 ,초기화 블럭
+
+- 대상이 멤버
+    
+    - 모든 인스턴스에 공통적으로 사용되는 클래스변수가 된다.
+
+    - 클래스변수는 인스턴스를 생성하지 않고도 사용 가능하다.
+
+    - 클래스가 메모리에 로드될 때 생성된다.
+
+- 대상이 메서드
+
+    - 인스턴스를 생성하지 않고도 호출이 가능한 static 메서드가 된다.
+
+    - static 메서드 내에서는 인스턴스멤버들을 직접 사용할 수 없다.
+
+```
+class StaticTest {
+
+    static int width = 200;
+    static int height = 120;
+
+    static { // 클래스 초기화 블럭
+        // static 변수의 복잡한 초기화 수행
+
+    }
+
+    static int max(int a, int b) {
+        return a > b ? a : b;
+    }
+}
+```
+
+#### final
+
+- final 이 사용될 수 있는 곳 - 클래스, 메서드 , 멤버변수 , 지역변수
+
+- 대상
+
+    - **클래스** : 변경될 수 없는 클래스, 확장될 수 없는 클래스가 된다.
+
+    - **메서드** : 변경될 수 없는 메서드, final로 지정된 메서드는 오버라이딩을 통해 재정의 될 수 없다.
+
+    - **멤버변수 , 지역변수** : 변수 앞에 final 이 붙으면 , 값을 변경할 수 없는 상수가 된다.
+
+```
+final class FinalTest {
+
+    final int MAX_SIZE = 10; // 멤버 변수
+
+    final void getMaxSize() {
+        final LV = MAX_SIZE;
+        return MAX_SIZE;
+    }
+
+}
+```
+
+#### 생성자를 이용한 final 멤버변수 초기화
+
+- final이 붙은 변수는 상수이므로 보통은 선언과 초기화를 동시에 하지만, 인스턴스변수의 경우 생성자에서 초기화 할 수 있다.
+
+```
+class Card {
+
+    final int NUMBER;
+    final String KIND;
+
+    static int width = 100;
+    static int height = 250;
+
+    Card(String kind, int num) {
+        KIND = kind;
+        NUMBER = num;
+    }
+
+    Card() {
+        this("HEART", 1);
+    }
+
+    public String toString() {
+        return "" + KIND +  " " + NUMBER;
+    }
+}
+```
+
+#### abstract 
+
+- abstract 가 사용될 수 있는 곳 : 클래스 , 메서드
+
+- 대상
+    - 클래스 : 클래스 내에 추상메서드가 선언되어 있음을 의미한다.
+
+    - 메서드 : 선언부만 작성하고 구현부는 작성하지 않은 추상메서드임을 알린다.
+
+#### 접근 제어자
+
+- 멤버 또는 클래스에 사용되어, 외부로부터 접근을 제어한다.
+
+- 접근 제어자가 사용될 수 있는 곳 : 클래스, 멤버변수, 메서드 , 생성자
+
+- private : 같은 클래스 내에서만 접근이 가능하다.
+
+- default : 같은 패키지 내에서만 접근이 가능하다.
+
+- protected : 같은 패키지 내에서, 그리고 다른 패키지의 자손클래스에서 접근이 가능하다.
+
+- public : 접근 제한이 전혀 없다.
+
+#### 접근 제어자를 이용한 캡슐화
+
+- 접근 제어자를 사용하는 이유 : 외부로부터 데이터를 보호하기 위해서, 외부에는 불필요한 내부적으로만 사용되는 부분을 감추기 위해서
+
+```
+class Time {
+
+    private int hour;
+    private int minute;
+    private int second;
+
+    Time(int hour, int minute, int second) {
+        setHour(hour);
+        setMinute(minute);
+        setSecond(second);
+    }
+    public int getHour() {return hour;}
+    public int setHour(int hour) {
+        if(hour < 0 || hour > 23) return;
+        this.hour = hour;
+    }
+
+}
+
+public static void main(String args[]) {
+    Time t = new Time(12,35,30);
+    System.out.println(t);
+}
+```
+
+#### 생성자의 접근 제어자
+
+- 일반적으로 생성자의 접근제어자는 클래스의 접근제어자와 일치한다.
+
+- 생성자에 접근 제어자를 사용함으로써 인스턴스의 생성을 제한할 수 있다.
+
+```
+final class Singleton {
+
+    private static Singleton s = new Singleton();
+    private Singleton() { // 생성자
+        // ...
+    }
+    public static Singleton getInstance() {
+
+        if (s == null) {
+            s = new Singleton();
+        }
+        return s;
+    }
+}
+```
+
+#### 제어자의 조합
+
+1. 메서드에 static과 abstract를 함께 사용할 수 없다.
+    - static 메서드는 몸통이 있는 메서드에만 사용할 수 있기 때문이다.
+
+2. 클래스에 abstract와 final을 동시에 사용할 수 없다.
+    - 클래스에 사용되는 final은 클래스를 확장할 수 없다는 의미고, abstract는 상속을 통해서 완성 되어야 한다는 의미이므로 서로 모순되기 때문이다.
+
+3. abstract메서드의 접근제어자가 private일 수 없다.
+    - abstract 메서드는 자손클래스에서 구현해주어야 하는데 접근 제어자가 private면, 자손 클래스에서 접근할 수 없기 때문이다.
+
+4. 메서드에 private 와 final을 같이 사용할 필요는 없다.
+    - 접근 제어자가 private인 메서드는 오버라이딩 될 수 없기 때문이다. 이 둘 중 하나만 사용해도 충분하다.
+
+
+#### 다형성 (polymorphism)
+
+- 여러가지 형태를 가질 수 있는 능력
+
+- 하나의 참조변수로 여러 타입의 객체를 참조할 수 있는 것. 즉, **조상타입의 참조변수로 자손타입의 객체를 다룰 수 있는 것**이 다형성이다.
+
+- 조상타입의 참조변수로 자손타입의 인스턴스를 참조할 수 있지만, 반대로 자손타입의 참조변수로 조상타입의 인스턴스를 참조할 수는 없다.
+
+#### 참조변수의 형변환
+
+- 서로 상속관계에 있는 타입간의 형변환만 가능하다.
+
+- 자손 타입에서 조상타입으로 형변환하는 경우, **형변환 생략가능**.
+
+- 조상타입에서 자손타입으로 형변환하는 경우 **형변환 생략불가**.
+
+```
+class Car {
+
+    String color;
+    int door;
+
+    void drive() {}
+    void stop() {}
+
+}
+
+class FireEngine extends Car {
+    void water() {}
+}
+class Ambulance extends Car {
+    void siren() {}
+}
+
+public static void main(String args[]) {
+    Car car = null;
+    FireEngine fe = new FireEngine();
+    FireEngine fe2 = null;
+
+    fe.water();
+    car = fe; // car = (Car)fe; 조상 <- 자손
+    fe2 = (FireEngine) car;
+    fe2.water();
+}
+```
+
+#### instanceof 연산자
+
+- 참조변수가 참조하는 인스턴스의 실제 타입을 체크하는데 사용
+
+- 이항연산자이며 피연산자는 참조형 변수와 타입. 연산결과는 true, false.
+
+- instanceof의 연산결과가 true 이면, 해당 타입으로 형변환이 가능하다.
+
+```
+class InstanceofTest {
+
+    public static void main(String args[]) {
+
+        FireEngine fe = new FireEngine();
+
+        if(fe instanceof FireEngine) {
+            System.out.println("1");
+        }
+        if(fe instanceof Car) {
+            System.out.println("2");
+        }
+        if(fe instanceof Object) {
+            System.out.println("3");
+        }
+    }
+}
+```
+
+#### 참조변수와 인스턴스변수의 연결
+
+- 멤버변수가 중복정의된 경우, 참조변수의 타입에 따라 연결되는 멤버변수가 달라진다. (**참조변수타입에 영향을 받음**)
+
+- 메서드가 중복정의된 경우, 참조변수의 타입에 관계없이 항상 실제 인스턴스의 타입에 정의된 메서드가 호출된다. (**참조타입변수에 영향을 받지 않음**)
+
+```
+class Parent {
+
+    int x = 100;
+    void method() {
+        System.out.println("Parent Method");
+    }
+}
+class Child extends Parent {
+
+    int x = 200;
+    void method() {
+        System.out.println("Child Method");
+    }
+}
+
+public static void main(String args[]) {
+    Parent p= new Child();
+    Child c = new Child();
+
+    System.out.println(p.x);
+    p.method();
+    System.out.println(c.x);
+    c.method(); 
+}
+```
+위 코드의 실행결과는 `p.x = 100 , Child Method , c.x= 200, Child Method` 로 메서드는 `Child` 에서 가져 온 것을 알 수 있다.
+
+#### 매개변수의 다형성
+
+- 참조형 매개변수는 메서드 호출 시 , 자신과 같은 타입 또는 자손 타입으 인스턴스를 넘겨줄 수 있다.
+
+#### 여러 종류의 객체를 하나의 배열로 다루기
+
+- 조상타입의 배열에 자손들의 객체를 담을 수 있다
+
+```
+Product p1 = new Tv();
+Product p2 = new Computer();
+Product p3 = new Audio();
+
+Product p[] = new Product[3];
+p[0] = new Tv();
+p[1] = new Computer();
+p[2] = new Audio();
+```
+
+- java.util.Vector : 모든 종류의 객체들을 저장할 수 있는 클래스
+
+    - Vector() : 10개의 객체를 저장할 수 있는 Vector 인스턴스를 생성한다. 10개 이상의 인스턴스가 저장되면 , 자동적으로 크기가 증가한다.
+
+    - boolean add(Object o) : Vector에 객체를 추가한다. 추가에 성공하면 결과값을 true, 실패하면 false를 반환한다.
+
+    - boolean remove(Object o) : Vector에 저장되어 있는 객체를 제거한다. 제거에 성공하면 true, 실패하면 false를 반환한다.
+
+    - boolean isEmpty() : Vector가 비어있는지 검사한다.
+
+    - Object get(int index) : 지정된 위치 (index)의 객체를 반환한다. 반환타입이 Object타입이므로 적절한 타입으로의 형변환이 필요하다.
+
+    - int size() : Vector에 저장된 객체의 개수를 반환한다.
+    

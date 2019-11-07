@@ -1,0 +1,46 @@
+---
+layout: post
+title:  "BOJ 1937"
+date:   2019-11-07 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm DynamicProgramming 동적계획법
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+
+using namespace std;
+
+int N;
+int dp[100001];
+
+void solve() {
+
+	dp[1] = 1;
+
+	for (int i = 1; i <= N; i++) {
+		
+		for (int j = i/2; j > 0; j--) {
+			int temp = j * j;
+			if (i >= temp && temp >0)
+			{
+				if (dp[i] == 0) dp[i] = dp[i - temp] + 1;
+				else dp[i] = (dp[i - temp] + 1 > dp[i]) ? dp[i] : dp[i - temp] + 1;
+			}
+		}
+	}
+	cout << dp[N] << "\n";
+}
+
+int main() {
+	cin >> N;
+	solve();
+	return 0;
+}
+```
+
+무식하게도 풀었다...처음 생각하고 대충 짠 코드지만 제출 하니 런타임에러가 났었다. 그러면서 범위도 생각하고 짰고, 메모리도 충분하고 오버플로우일 가능성이 있다는 생각을 하긴 했었지만, 그 동안 오버플로우가 났을 때에도 런타임에러는 발생하지 않았으니 무심코 그 가능성을 넘기고 이 간단한 코드를 몇시간 동안 쳐다본 것 같다.
+
+`i >= temp` 이 if 문이 문제였는데, 오버플로우가 나서 음수가 된 나머지 if 문을 통과하고 배열에 가서 참조를 하면서 생긴 런타임 에러였다. 맨날 주어진 조건에서 문제만 풀다보니 알고리즘을 기계적으로 짤려고 했던 것 같다. 

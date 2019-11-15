@@ -1,0 +1,105 @@
+---
+layout: post
+title:  "BOJ 1963"
+date:   2019-11-15 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm BFS
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+#include <queue>
+#include <string>
+
+using namespace std;
+bool isPrime[10000];
+bool visited[10000];
+int T;
+void setPrimeNum() { // Prime Number = false
+
+	for (int i = 2; i < 10000; i++) {
+
+		if (!isPrime[i]) {
+			for (int j = 2; j <= 10000 / i; j++) {
+				isPrime[i * j] = true;
+			}
+		}
+	}
+}
+
+int solve(string src, string dst) {
+
+	int cnt = 0;
+	queue <pair<string, int>> q;
+	q.push(make_pair(src, 0));
+
+	while (!q.empty()) {
+
+		string cur = q.front().first;
+		cnt = q.front().second;
+
+		q.pop();
+
+		if (cur.compare(dst) == 0)
+			return cnt;
+
+		for (int i = 0; i < 4; i++) { // 첫째자리 ~ 넷째자리
+
+			for (int j = 0; j < 10; j++) {
+				int next = 0;
+				if ((cur[i] - '0') == j) continue;
+				if (i == 0) {
+					if (j == 0) continue;
+					else next = j * 1000 + (cur[1] - '0') * 100 + (cur[2] - '0') * 10 + (cur[3] - '0');
+				}
+				else if (i == 1) 
+					next = (cur[0]-'0') * 1000 + j*100 + (cur[2] - '0')*10 + (cur[3] - '0');
+				else if (i == 2)
+					next = (cur[0] - '0') * 1000 + (cur[1] - '0') * 100 + j * 10 + (cur[3] - '0');
+				else
+					next = (cur[0] - '0') * 1000 + (cur[1] - '0') * 100 + (cur[2] - '0') * 10 + j;
+				if (!isPrime[next] && !visited[next]) {
+					visited[next] = true;
+					string temp = to_string(next);
+					q.push({ temp, cnt + 1 });
+					
+				}
+			}
+		}
+	}
+	return -1;
+}
+
+void initVisited() {
+	for (int i = 1000; i < 10000; i++)
+		visited[i] = false;
+}
+
+int main() {
+	string input1, input2;
+	
+	cin >> T;
+	setPrimeNum();
+	while (T--) {
+		cin >> input1 >> input2;
+		cout << solve(input1, input2) << "\n";
+		initVisited();
+	}
+
+	return 0;
+}
+```
+
+한번에 한자릿수 밖에 바꿀 수 없으면서 그 바꾼 경로또한 소수여야 하며, 최종 목적지 또한 소수여야 하기 때문에 queue 에서 탐색을 할 때에도 소수임을 체크해줘야 한다.
+
+소수를 매번 체크해주기 위해서 solve 함수를 호출해주기 전에 bool 형태의 배열을 선언해서 **에라토스테네스의 체**로 구현을 했다.
+
+또한 방문했던 노드에서 다시 push 를 해주는 것 만큼 비효율적인 것이 없기 때문에 visited 를 선언하여 방문했던 노드는 그냥 지나치도록 구현했다.
+
+~~하지만 오랜만에 BFS를 풀다보니 visited 초기화하는 걸 깜빡해서 그거 찾는데만 1시간 반이 걸렸다.~~
+
+위 코드에서는 **compare** 함수로 비교를 했는데 C++에서는 **==** 을 사용하여도 연산자 오버로딩으로 인해서 동일한 기능을 수행한다. 차이점이라고 한다면 **디버그 빌드**시 **약간 더 시간이 걸린다**.
+
+문득 블로그에 업로드 하다 느꼈는데, -1 경우 impossible 을 출력하는걸 깜빡했는데 BOJ에서는 **맞았습니다!** 가 출력되었다.

@@ -1,0 +1,63 @@
+---
+layout: post
+title:  "문자열 자르기 - C++"
+date:   2019-11-13 13:00:59
+author: mollangzzang
+categories: TIL
+tags:	TIL Algorithm C++
+cover:  "/assets/TIL.png"
+---
+
+코딩 테스트를 치다보면 문자열은 상당히 빈번하게 나온다. C++ 이 알고리즘 문제를 풀 때 좋은 것은 맞지만 문자열을 처리해야 하는 경우는 상당히 귀찮다.
+
+보통 `<string.h>` 또는 `<cstring>` 에 있는 `strtok` 을 또는 boost를 사용하긴 하지만 python 같은 언어에 비하면 불편하며, string 일 경우엔 이조차 따로 구현을 해야한다.
+
+그래서 주기적으로 문자열 관련 함수는 업데이트를 하려고 한다.
+
+```
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <vector>
+#include <iterator>
+
+using namespace std;
+
+template<typename Out>
+void split(const string& s, char delim, Out result) {
+
+	stringstream ss(s);
+	string item;
+
+	while (getline(ss, item, delim))
+		* (result++) = item;
+}
+
+vector<string> split(const string& s, const char delim) {
+
+	vector <string> elems;
+	split(s, delim, back_inserter(elems));
+
+	return elems;
+}
+
+void print( vector<string>& vec) {
+
+	for (int i = 0; i < vec.size(); i++) {
+
+		string temp = vec[i];
+		cout << temp << endl;
+
+	}
+
+}
+
+int main() {
+
+	vector <string> x = split("one,two,,three", ',');
+	// 중간에 공백이 들어감
+	print(x);
+	return 0;
+
+}
+```

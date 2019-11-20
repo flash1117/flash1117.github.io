@@ -1,0 +1,42 @@
+---
+layout: post
+title:  "BOJ 5532"
+date:   2019-11-20 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm Simulation
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+
+using namespace std;
+
+int L, A, B, C, D;
+
+int solve() {
+
+	while (L--) {
+
+		A -= C;
+		B -= D;
+
+		if (A <= 0 && B <= 0) return L;
+	}
+
+	return -1;
+}
+
+int main() {
+
+	cin >> L >> A >> B >> C >> D;
+	cout << solve() << "\n";
+
+	return 0;
+}
+```
+
+#### Logic
+
+- 방학기간 내에 못하는 경우가 없기 때문에, 입력값을 하루가 지날때마다 감소시켜서 0이하로 떨어지면 답을 출력하면 된다.

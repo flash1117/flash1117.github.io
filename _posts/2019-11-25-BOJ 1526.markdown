@@ -1,0 +1,109 @@
+---
+layout: post
+title:  "BOJ 1526"
+date:   2019-11-25 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm Simulation
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+string N;
+
+int solve() {
+	int ret = 0;
+	vector <int> vec;
+
+	for (int i = 0; i < N.length(); i++) {
+
+		if (N[i] == '4' || N[i] == '7') {
+			vec.push_back(N[i] - '0');
+		}
+		else {
+
+			if (N[i] < '4') {
+
+				if (vec.empty()) {
+					for (int j = i + 1; j < N.length(); j++)
+						vec.push_back(7);
+				}
+				else {
+					bool state = false;
+					vec.push_back(7);
+					for (int j = i - 1; j >= 0; j--) {
+						if (vec[j] == 7) {
+							vec[j] = 4;
+							state = true;
+							break;
+						}
+						else {
+							vec[j] = 7;
+						}
+					}
+					if (state);
+					else vec.pop_back();
+					for (int j = i + 1; j < N.length(); j++)
+						vec.push_back(7);
+				}
+				break;
+			}
+			else if (N[i] > '4' && N[i] < '7') {
+				vec.push_back(4);
+				for (int j = i + 1; j < N.length(); j++)
+					vec.push_back(7);
+				break;
+			}
+			else { // 8 9
+				for (int j = i; j < N.length(); j++)
+					vec.push_back(7);
+				break;
+			}
+		}
+	}
+
+	int temp = 1;
+
+	while (!vec.empty()) {
+
+		int cur = vec.back();
+		vec.pop_back();
+		ret += temp * cur;
+		temp *= 10;
+	}
+
+	return ret;
+}
+
+int main() {
+
+	cin >> N;
+	cout << solve() << "\n";
+
+	return 0;
+}
+```
+
+#### 로직
+
+N이 주어졌을 때, 작거나 같은 수 중에 4 와 7로 이루어진 최대값을 출력하는 문제이다.
+
+따라서 고려해야할 조건은 아래와 같다.
+
+- 해당 자릿수의 숫자가 4이거나 7일 경우
+- 4 보다 작을 경우
+- 4보다 크고 7보다 작은 경우
+- 7보다 클 경우
+
+평소와 다른 방식으로 짜보고 싶어서 , 구현을 하다보니 스택을 이용해서 코드를 작성한 것 처럼 되어버렸다. 반복문을 통해서 순회를 하면서 해당 자릿수의 숫자가 4 or 7 이면 push. 다른 숫자일 경우에는 범위값을 나누어서 구현을 했으며 4보다 작은 경우가 아니라면 구현은 정말 쉽게 할 수 있다.
+
+4보다 작은 경우에는 생각을 해주어야 할 것이 **앞선 숫자중 7의 존재 유무**이다. 앞선 숫자중 7이 존재한다면 4로 바꾸고 나머지 자릿수들이 7이 되는 경우가 최댓값이며, 7이 존재하지 않는다면 전부 4로 되어있단 소리와 같기때문에 이보다 작은 수가 되려면 한 자릿수가 줄어든 상태의 **7777....7** 이 최댓값이 되게 된다.
+
+#### 실수한 점
+
+순회를 하는 도중 중간에 4보다 작은 값이 나왔을 때 구현을 잘못 했었다.

@@ -1,0 +1,93 @@
+---
+layout: post
+title:  "BOJ 5397"
+date:   2019-11-26 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm Simulation
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+string key;
+
+void solve() {
+
+	char tmp;
+	vector <char> vec;
+	vector <char> temp;
+
+	for (int i = 0; i < key.length(); i++) {
+
+		if (key[i] == '<') {
+			if (!vec.empty()) {
+				tmp = vec.back();
+				vec.pop_back();
+				temp.push_back(tmp);
+			}
+		}
+		else if (key[i] == '>') {
+			if (!temp.empty()) {
+				tmp = temp.back();
+				temp.pop_back();
+				vec.push_back(tmp);
+			}
+		}
+		else if (key[i] == '-') {
+			if (!vec.empty()) {
+				vec.pop_back();
+			}
+		}
+		else {
+			vec.push_back(key[i]);
+		}
+	}
+
+	while (!temp.empty()) {
+		tmp = temp.back();
+		temp.pop_back();
+		vec.push_back(tmp);
+	}
+
+	for (int i = 0; i < vec.size(); i++) 
+		cout << vec[i];
+	cout << "\n";
+	return;
+}
+
+int main() {
+
+	int T;
+	cin >> T;
+	while (T--) {
+		key = "";
+		cin >> key;
+
+		solve();
+	}
+
+	return 0;
+}
+```
+
+#### 구현
+
+신경을 써줘야 할 부분은 커서의 위치인데, 커서의 위치를 일일이 찍어주면서 string 에 insert , delete 를 하다보니 오류를 잡는데 시간이 너무 걸려서 단순하게 하기 위해 vector 을 이용한 stack 의 형태로 구현하게 되었다.
+
+위 문제에서 행할 수 있는 행위는 3가지 이며 **커서 왼쪽으로 옮기기** , **오른쪽으로 옮기기** , **삭제**가 있다.
+
+- 커서를 왼쪽으로 옮기는 경우는 다시 오른쪽으로 옮기기 전까지 현재 위치에서 event가 이루어지기 때문에 아예 pop 을 해서 temp 라는 vector에 삽입을 해놓았다. 왼쪽이 여러번 들어오는 경우에도 temp 에 LIFO 상태가 되기 때문에 문제가 없다.
+
+- 3가지의 행위를 할 때에 vector 가 비어져있는지 체크를 해주고 시작해서 존재하지 않는 index를 참조하지 않도록 구현하였다.
+
+#### 실수한 점
+
+- 여전히 문자열을 다루는데 미숙함을 느꼈다. 2시간동안 문자열로 못푼 문제를 스택을 통해서 5분만에 구현했다. 누가봐도 스택으로 구현하라는 문제가 아니지만, 비효율적인 것을 알면서도 이러한 방식으로 구현을 했으며 문자열을 다루는 부분을 더 공부해야 할 것 같다. 
+
+- 만약 입력값이 `<-` 와 같은 방식으로 왼칸으로 옮긴 뒤 한 칸 삭제한 상태에서 끝난다면 커서가 제일 마지막에서 종료가 되는 형태가 아니게 된다. 그러므로 key 의 length 만큼 순회를 했을 때, temp가 empty 가 아니라면 그만큼의 문자가 결과값을 출력해야하는 vector에 들어가있지 않은 상태가 된다. 이 부분을 빠트려서 한번 틀렸었다.

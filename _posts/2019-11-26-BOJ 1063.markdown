@@ -1,0 +1,123 @@
+---
+layout: post
+title:  "BOJ 1063"
+date:   2019-11-26 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm Simulation
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int K, S, N;
+int map[8][8];
+pair<int, int> king, stone;
+
+vector <string> vec;
+
+int dx[] = { 0,0,1,-1,-1,-1,1,1 }; // R L B T RT LT RB LB
+int dy[] = { 1,-1,0,0,1,-1,1,-1 };
+
+bool isBoundary(int x, int y) {
+
+	if (x < 0 || y < 0 || x>7 || y>7) return false;
+	return true;
+}
+
+int moveDir(string move) {
+
+	if (move == "R") return 0;
+	else if (move == "L") return 1;
+	else if (move == "B") return 2;
+	else if (move == "T") return 3;
+	else if (move == "RT") return 4;
+	else if (move == "LT") return 5;
+	else if (move == "RB") return 6;
+	else if (move == "LB") return 7;
+}
+
+void matchMap(string input1, string input2) {
+
+	king.first = input1[0] - 'A';
+	king.second = 8-(input1[1] - '0');
+	
+	stone.first = input2[0] - 'A';
+	stone.second = 8-(input2[1] - '0');
+}
+
+void solve() {
+	int kingX = king.second;
+	int kingY = king.first;
+
+	int stoneX = stone.second;
+	int stoneY = stone.first;
+
+	for (int i = 0; i < vec.size(); i++) {
+
+		int dir = moveDir(vec[i]);
+		int nextX = kingX + dx[dir];
+		int nextY = kingY + dy[dir];
+
+		if (isBoundary(nextX, nextY)) {
+			int snextX = stoneX + dx[dir];
+			int snextY = stoneY + dy[dir];
+
+			if (nextX == stoneX && nextY == stoneY) {
+				if (isBoundary(snextX, snextY)) {
+					kingX = nextX;
+					kingY = nextY;
+					stoneX = snextX;
+					stoneY = snextY;
+				}
+			}
+			else {
+				kingX = nextX;
+				kingY = nextY;
+			}
+
+		}
+	}
+
+	char retX = kingY + 'A';
+	char retY = 8 - kingX + '0';
+
+	char sretX = stoneY + 'A';
+	char sretY = 8 - stoneX + '0';
+
+	cout << retX << retY << "\n";
+	cout << sretX << sretY << "\n";
+
+}
+
+int main() {
+
+	string input1, input2;
+	cin >> input1 >> input2 >> N;
+	matchMap(input1, input2);
+	for (int i = 0; i < N; i++) {
+		cin >> input1;
+		vec.push_back(input1);
+	}
+	solve();
+	return 0;
+}
+```
+
+#### 구현
+
+귀찮긴 하지만 행과열을 꼬아놨다는 것만 정신차리면 별로 어렵지는 않은 문제이다.
+
+- 첫째로 이동하는 방향에 대해서는 dx 와 dy 배열을 생성하여 해결했다. `moveDir` 함수에서 이동해야할 index를 return 하도록 구현했다.
+
+- 범위 체크를 해주어야 하므로 isBoundary 를 통해 구현하였다.
+
+- vector 의 크기만큼 순회해주었고 , moveDir 와 isBoundary 함수는 따로 구현했으니 신경쓸 것은 돌과 왕의 위치가 겹치는 경우에 돌도 같은 방향으로 움직이도록 예외를 선언해주는 것이였다. 평소에는 queue 를 통해 구현하는 것을 더 선호하는 편이지만 vector 를 이용하여 BFS 비슷하게 풀어보았다.
+
+- 테스트케이스는 `A1 B3` 과 같은 식으로 열 , 행 순으로 들어오며 나는 행을 x 열을 y로 놔두는 것을 선호하기 때문에 서로 바꾸어서 넣어줄 필요가 있었다. 또한 A는 0에 해당함으로 A를 그대로 빼주었고, 뒤에 1과 같은 숫자는 **아래에서 위로 올라오는 형식**으로 선정된 index 이기 때문에 배열에 접근할 때에는 제일 밑바닥인 7에 해당한다. 규칙을 찾아보자면 `8 - (indexNumber - '0')`이 된다. indexNumber 에서 '0' 을 빼주는 이유는 아스키코드 특성을 이용해서 숫자로 바꿔줄 필요가 있기 때문이고 체스판 최대의 길이인 8에서 빼주게 되면 내가 접근하고자 하는 올바른 indexNumber 를 얻게 된다.
+
+- 위에 코드를 구현 하고나면 다시 바꾼 규칙들을 역이용하여 올바른 답이 나오도록 구현하였다.

@@ -1,0 +1,67 @@
+---
+layout: post
+title:  "BOJ 2160"
+date:   2019-11-28 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm Simulation BruteForce
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+
+using namespace std;
+
+typedef struct {
+	int picture1, picture2, cnt;
+}Picture;
+
+int N;
+char map[50][5][7];
+
+void solve() {
+
+	Picture p = { 50, 51,36 }; // people number & different char count
+
+	for (int i = 0; i < N; i++) {
+		for (int j = i + 1; j < N; j++) {
+			int cnt = 0;
+
+			for (int v = 0; v < 5; v++) {
+				for (int h = 0; h < 7; h++) {
+					if (map[i][v][h] != map[j][v][h]) cnt++;
+				}
+			}
+
+			if (p.cnt > cnt) {
+				p.picture1 = i+1;
+				p.picture2 = j+1;
+				p.cnt = cnt;
+			}
+		}
+	}
+	cout << p.picture1 << " " << p.picture2 << "\n";
+}
+
+int main() {
+
+	cin >> N;
+
+	for (int st = 0; st < N; st++) {
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 7; j++) {
+				cin >> map[st][i][j];
+			}
+		}
+	}
+	
+	solve();
+
+	return 0;
+}
+```
+
+#### 구현
+
+- 완전탐색으로 구현하여 각 그림마다 다른 색상이 있을 경우 count 하였다. 비교가 한번 끝나고 난 뒤엔 크기 비교를 통하여 최솟값일 경우 그림의 Number를 저장하여서 결과를 출력하였다.

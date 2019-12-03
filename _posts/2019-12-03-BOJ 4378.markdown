@@ -1,0 +1,83 @@
+---
+layout: post
+title:  "BOJ 4378"
+date:   2019-12-03 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm Simulation
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+char Array[1000];
+
+void setString() {
+	Array[' '] = ' ';
+	Array['1'] = '`';
+	for (int i = '2'; i <= '9'; i++)
+		Array[i] = i - 1;
+	Array['0'] = '9';
+	Array['-'] = '0';
+	Array['='] = '-';
+	Array['W'] = 'Q';
+	Array['E'] = 'W';
+	Array['R'] = 'E';
+	Array['T'] = 'R';
+	Array['Y'] = 'T';
+	Array['U'] = 'Y';
+	Array['I'] = 'U';
+	Array['O'] = 'I';
+	Array['P'] = 'O';
+	Array['['] = 'P';
+	Array[']'] = '[';
+	Array['\\'] = ']';
+	Array['S'] = 'A';
+	Array['D'] = 'S';
+	Array['F'] = 'D';
+	Array['G'] = 'F';
+	Array['H'] = 'G';
+	Array['J'] = 'H';
+	Array['K'] = 'J';
+	Array['L'] = 'K';
+	Array[';'] = 'L';
+	Array['\''] = ';';
+	Array['X'] = 'Z';
+	Array['C'] = 'X';
+	Array['V'] = 'C';
+	Array['B'] = 'V';
+	Array['N'] = 'B';
+	Array['M'] = 'N';
+	Array[','] = 'M';
+	Array['.'] = ',';
+	Array['/'] = '.';
+}
+
+int main()
+{
+	
+	string temp;
+
+	setString();
+	while (getline(cin, temp)) {
+
+		for (int i = 0; i < temp.length(); i++) {
+			temp[i] = Array[temp[i]];
+		}
+		cout << temp;
+	}
+	return 0;
+}
+
+
+```
+
+뭔짓을 해도 안풀린다. 그냥 정말 발암을 유발하려고 만든 문제인거 같다... 하다 하다 안되서 하나하나 값을 다집어놓고 돌렸는데도 틀렸다. 틀렸습니다. 컴파일 에러, 시간초과로 한페이지가 점철된 문제는 진짜 이 문제가 처음인 것 같다... 현타가 개빡시게 오는데.. 원래는 정답만 업로드 했는데, 이 문제는 다시 풀지 않을 것 같아서 올린다. **시뮬레이션을 공부중이라면 이 문제 말고 다른 문제를 푸는 것이 훨씬 좋을 것 같다.**
+
+다른 블로그를 뒤져봐도 이 문제 풀이를 설명해놓은 블로그가 보이지 않는다.
+
+[Link]https://browoo.tistory.com/5 이 블로그가 있긴 한데, 코드를 복붙하니 컴파일 에러가 떴다..

@@ -1,0 +1,148 @@
+---
+layout: post
+title:  "BOJ 1986"
+date:   2019-12-03 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm Simulation
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+#include <vector>
+#include <queue>
+
+using namespace std;
+
+int N, M;
+typedef struct {
+	int x, y, dir;
+}pos;
+
+vector <pair<int,int>> queen;
+vector <pair<int,int>> knight;
+vector <pair<int, int>> pawn;
+bool visited[1000][1000];
+char map[1000][1000];
+
+int qdx[] = { 0,0,-1,1,-1,-1,1,1 };
+int qdy[] = { 1,-1,0,0,1,-1,-1,1 };
+int kdx[] = { -2,-2,-1,-1,1,1,2,2 };
+int kdy[] = { 1,-1,2,-2,2,-2,1,-1 };
+
+bool isBoundary(int x, int y) {
+	if (x<0 || y<0 || x>N - 1 || y>M - 1) return false;
+	return true;
+}
+
+int solve() {
+
+	int cnt = 0;
+	queue <pos> q;
+	queue <pos> k;
+
+	for (int i = 0; i < queen.size(); i++) {
+		for (int j = 0; j < 8; j++) {
+			q.push({ queen[i].first - 1, queen[i].second - 1 ,j });
+		}
+		visited[queen[i].first - 1][queen[i].second - 1] = true;
+	}
+	for (int i = 0; i < knight.size(); i++) {
+		for (int j = 0; j < 8; j++) {
+			k.push({ knight[i].first - 1, knight[i].second - 1 ,j});
+		}
+		visited[knight[i].first - 1][knight[i].second - 1] = true;
+	}
+	while (!q.empty()) {
+
+		int curX = q.front().x;
+		int curY = q.front().y;
+		int dir = q.front().dir;
+		q.pop();
+
+		int nextX = curX + qdx[dir];
+		int nextY = curY + qdy[dir];
+
+		if (isBoundary(nextX, nextY) && map[nextX][nextY] == NULL) {
+			q.push({ nextX, nextY ,dir});
+			visited[nextX][nextY] = true;
+		}
+	}
+
+	while (!k.empty()) {
+
+		int curX = k.front().x;
+		int curY = k.front().y;
+		int dir = k.front().dir;
+		k.pop();
+
+		int nextX = curX + kdx[dir];
+		int nextY = curY + kdy[dir];
+
+		if (isBoundary(nextX, nextY) && map[nextX][nextY] == NULL) {
+			visited[nextX][nextY] = true;
+		}
+		
+	}
+
+	for (int i = 0; i < pawn.size(); i++)
+		visited[pawn[i].first - 1][pawn[i].second - 1] = true;
+
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < M; j++) {
+			if (!visited[i][j]) cnt++;
+
+		}
+	}
+
+	return cnt;
+}
+
+int main() {
+
+	int input;
+	pair<int, int> pos;
+	cin >> N >> M;
+	cin >> input;
+	for (int i = 0; i < input; i++) {
+		cin >> pos.first >> pos.second;
+		queen.push_back(pos);
+		map[pos.first - 1][pos.second - 1] = 'Q';
+	}
+	cin >> input;
+	for (int i = 0; i < input; i++) {
+		cin >> pos.first >> pos.second;
+		knight.push_back(pos);
+		map[pos.first - 1][pos.second - 1] = 'K';
+	}
+	cin >> input;
+	for (int i = 0; i < input; i++) {
+		cin >> pos.first >> pos.second;
+		pawn.push_back(pos);
+		map[pos.first - 1][pos.second - 1] = 'P';
+	}
+
+	cout << solve() << "\n";
+
+	return 0;
+}
+```
+
+#### 구현
+
+- 이차원 char 배열을 생성하여 입력을 받는 순간, map 을 구성해주었다. 또한 결과적으로 방문하지 않은 곳은 안전한 영역이기 때문에 이를 세기 위해서 bool 타입의 이차원 배열을 하나 더 선언하였다.
+
+- char 타입을 전역변수로 선언하게 되면 NULL 로 초기화가 되게 된다.
+
+- K는 장애물을 통과할 수 있고, Q는 장애물을 통과하지 못한다고 하는데 사실 구현함에 있어서 별 상관은 없다. 어짜피 갈 수 있는지 확인을 하기 위해서 direction 배열을 생성하여 접근 할 것이기 때문이다.
+
+- 배열 두개를 생성하여 구현하였지만, 메모리 낭비를 줄이고 싶다면 char 배열 하나로 줄일 수 있을 것 같다.
+
+#### 실수한 점
+
+- 처음에 코드를 작성할 때 일반적인 BFS 를 구현하듯이 구현을 해서 Queen 이 Map 전체를 탐색하는 식으로 구현을 했었다.
+
+    - 구조체를 설정하지 않고 `pair<int,int>` 로 큐를 만들었는데, Queen 은 전체를 0 ~ 7 까지의 direction 을 전부 탐색하는 것은 처음 과정에서만 하고 두번째 이상의 과정부터는 자기가 가는 방향의 direction 만 가지고 갈 수 있는지 판별해야 한다. 따라서 후에 구조체를 선언하여 direction 을 포함하도록 하였다.
+
+- knight를 아무생각 없이 Queen 과 비슷한 방식으로 만들어서 한번 오답이 나왔었다. knight 는 Queen 과 같이 push를 해주면 안되고 처음 위치에서 다음 위치를 갈 수 있는지만 확인하고 끝내야한다.

@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "BOJ 1952"
-date:   2019-11-27 13:00:59
+date:   2019-11-28 13:00:59
 author: mollangzzang
 categories: Algorithm
 tags:	Algorithm Simulation

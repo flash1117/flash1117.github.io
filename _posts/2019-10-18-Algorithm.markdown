@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Dynamic Programming (3)"
-date:   2019-10-17 13:00:59
+date:   2019-10-18 13:00:59
 author: mollangzzang
 categories: Algorithm
 tags:	Algorithm DynamicProgramming 동적계획법

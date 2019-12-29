@@ -1,0 +1,52 @@
+---
+layout: post
+title:  "Front End - React(2)"
+date:   2019-12-29 13:00:59
+author: mollangzzang
+categories: TIL
+tags:	TIL js
+cover:  "/assets/TIL.png"
+---
+
+- 크롬 웹스토어에서 React Devloper tools 를 설치하게 되면 확장 프로그램이 깔리게 되는데, 이를 이용하여 웹에서 우클릭 - 검사 쪽으로 들어가서 기존의 html이 아닌 react에서 만든 컴포넌트를 확인이 가능하다. 또한 props 를 고쳐서 즉각적으로 확인하는 기능또한 가지고 있다.
+
+- 컴포넌트를 한 파일에 몰아서 써놓게 되면 다른 파일에서 가져다 쓰기도 힘들고 , 컴포넌트가 많아지면 많아질 수록 정리하기가 힘들다. 따라서 컴포넌트를 각 파일로 만들어서 관리하게 될 때 다른 파일에서 가져다 쓸 수 있게 하려면 `export default ClassName;` 와 같은 코드를 맨 마지막에 추가해주어야 한다.
+
+- Props 에 따라서 Component 내부적으로 사용되는 것들을 State 라고 한다.
+
+- 하드 코딩 되어있는 것은 보기 싫기 때문에 state 로 만들어서 props 로 전달하게 되는데 `render()` 를 하기전에
+
+```
+constructor(props) {
+    super(props);
+    this.state = {
+      subject:{title:'WEB', sub:'world wide web!'}
+    }
+  }
+```
+와 같은 식으로 state 를 초기화시킨다.
+
+그리고 이렇게 만든 state 라는 값을 subject에 props 값으로 넘겨야 하는데, 아래 코드와 같이 넘겨주게 된다.
+
+```
+<Subject
+    title={this.state.subject.title} 
+    sub={this.state.subject.sub}>
+</Subject>
+```
+
+다만 여러개의 값을 넘겨주고 싶을 경우에는 배열을 선언해서 초기화를 해주어야한다.
+
+```
+contents:[
+
+        {id:1, title:'HTML', desc:'HTML is HyperText Markup Language'},
+        {id:2, title:'CSS', desc:'Css is for design'},
+        {id:3, title:'JavaScript', desc:'Javascript is for interactive'},
+
+      ]
+```
+
+- 자동적으로 link를 생성시킬 경우 key 값을 설정해 주지 않으면 react 에서는 error 가 나게 된다. 따라서 `<li key={data[i].id}>` 같이 key 값을 설정해주어야 한다.
+
+- react 에서는 state 값이 바뀌면 render 함수가 다시 호출된다.

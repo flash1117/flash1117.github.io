@@ -10,7 +10,7 @@ cover:  "/assets/TIL.png"
 
 #### React
 
-- function 을 이용한 함수형 과 class 를 이용한 클래스형이 있다.
+- function 을 이용한 함수형 과 class 를 이용한 클래스형이 있다. 
 
 - React 에서는 사용자 정의 tag 를 Component 라고 한다.
     - Component 를 사용하게 되면 가독성과 재사용성이 매우 좋아진다.

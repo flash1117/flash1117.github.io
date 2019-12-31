@@ -1,8 +1,8 @@
-# Centrarium [![Circle CI](https://circleci.com/gh/bencentra/centrarium/tree/master.svg?style=svg)](https://circleci.com/gh/bencentra/centrarium/tree/master)
+# Dev. blog
 
-A simple yet classy theme for your Jekyll website or blog. Customizable to fit your style or brand.
+그날 공부한 내용, 알고리즘 문제를 풀고 난 뒤 코드 , 프로젝트 등을 정리하기 위해서 만든 Repo 입니다.
 
-Built with these awesome libraries:
+이 블로그에 사용된 라이브러리는 아래와 같습니다:
 * [Bourbon][bourbon]
 * [Neat][neat]
 * [Bitters][bitters]
@@ -11,24 +11,20 @@ Built with these awesome libraries:
 * [HighlightJS][highlightjs]
 * [Lightbox][lightbox]
 
-Here's a [demo](http://bencentra.com/centrarium). It also works on [GitHub Pages](http://bencentra.github.io/centrarium/). I also use it for [my own website][bencentra].
-
-Inspired by dirkfabisch's [Mediator](https://github.com/dirkfabisch/mediator) theme, which I previously used for my own blog, as well as [Type Theme](http://rohanchandra.github.io/type-theme/).
-
-Cover image by Chris M. Morris ([flickr][cover]).
+데모 버젼입니다 - [demo](http://bencentra.com/centrarium). [GitHub Pages](http://bencentra.github.io/centrarium/)에서도 잘 작동합니다.
 
 ## Features
 
-This theme comes with a number of features, including:
-* Easily customizable fonts and colors
-* Cover images for your homepage and blog posts
-* Pagination enabled by default
-* Archiving of posts by categories and tags
-* Syntax highlighting for code snippets
-* Disqus integration for post comments
-* Lightbox for viewing full-screen photos and albums
-* Google Analytics with custom page name tracking
-* Social media integration (Twitter, Facebook, LinkedIn, GitHub, and more)
+이 테마는 아래와 같은 기능을 포함하고 있습니다:
+* 쉽게 커스터마이징 할 수 있는 색상과 폰트.
+* 블로그 포스팅 및 홈페이지를 위한 표지 이미지.
+* 페이지 매김(Pagination)이 기본적으로 활성화.
+* 카테고리 및 태그 별 게시물 보관이 가능합니다.
+* code snippets 을 위한 Syntax highlighting.
+* 게시물 댓글을 위한 Disqus가 통합되어 있습니다.
+* 전체 화면 사진 및 앨범을 볼 수 있는 라이트 박스.
+* 맟춤 페이지 이름 추적 기능이 있는 구글 웹 로그 분석
+* SNS 통합 (Twitter, Facebook, LinkedIn, GitHub, and more)
 
 ## Installation
 
@@ -211,33 +207,3 @@ The `/js/` directory would contain the corresponding files:
 $ ls js/
 Popmotion.js Vue.js
 ```
-
-## Contributing
-
-Want to help make this theme even better? Contributions from the community are welcome!
-
-Please follow these steps:
-
-1. Fork/clone this repository.
-2. Develop (and test!) your changes.
-3. Open a pull request on GitHub. A description and/or screenshot of changes would be appreciated!
-4. I ([Ben Centra](https://github.com/bencentra)) will review and merge the pull request.
-
-## License
-
-MIT. See [LICENSE.MD](https://github.com/bencentra/centrarium/blob/master/LICENSE.md).
-
-[bencentra]: http://bencentra.com
-[bourbon]: http://bourbon.io/
-[neat]: http://neat.bourbon.io/
-[bitters]: http://bitters.bourbon.io/
-[refills]: http://refills.bourbon.io/
-[fontawesome]: http://fortawesome.github.io/Font-Awesome/
-[highlightjs]: https://highlightjs.org/
-[highlightjs_theme]: https://highlightjs.org/static/demo/
-[lightbox]: http://lokeshdhakar.com/projects/lightbox2/
-[cover]: https://www.flickr.com/photos/79666107@N00/3796678503/in/photolist-6MuYfc-61Rtft-8XzPmY-a6Cozm-54eSMs-6oMJmk-aepZQq-9YkPHp-fiAEGE-dVP4Z5-oxPyJP-atKUFJ-9YHWA5-9YF2f2-9YF2gR-9YHVGN-9YHVvs-qZYYQ6-4JqP2i-a2peGy-9YHVUm-9YHVF7-9YHVCL-9YF3NK-cYteMo-aiPmb9-69dtAi-9YF21x-4aWpmn-7SLiUL-77pqVX-8vXbYv-4HGDSH-a2h5P1-8LsZrQ-9aj1ez-auPZ7q-9YHVMd-9YF2bi-9YF23D-8LpWpn-9an6KL-9YHVZL-dqZ3Cz-2GuvnX-9YHWUo-9YHVWd-p5Roh5-i1zTbv-6sYrUT
-[disqus]: https://disqus.com/
-[ga]: http://www.google.com/analytics/
-[archives]: https://github.com/jekyll/jekyll-archives
-[sitemap]: https://github.com/jekyll/jekyll-sitemap

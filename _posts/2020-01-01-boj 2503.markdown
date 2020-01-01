@@ -1,0 +1,91 @@
+---
+layout: post
+title:  "BOJ 2503"
+date:   2020-01-01 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm BruteForce
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+typedef struct {
+
+	string num;
+	int strike, ball;
+}baseball;
+
+vector <baseball> tc;
+vector <int> vec = { 1,2,3,4,5,6,7,8,9 };
+vector <int> gameNum;
+int ret, N;
+
+void solve(int depth, int cnt) {
+
+	if (cnt == 3) {
+		vector<int> temp = gameNum;
+		do {
+			int sCnt = 0, bCnt = 0;
+			for (int i = 0; i < N; i++) {
+
+				sCnt = 0; bCnt = 0;
+				if (temp[0] == tc[i].num[0] - '0') sCnt++;
+				else if (temp[0] == tc[i].num[1] - '0' || temp[0] == tc[i].num[2] - '0') bCnt++;
+
+				if (temp[1] == tc[i].num[1] - '0') sCnt++;
+				else if (temp[1] == tc[i].num[0] - '0' || temp[1] == tc[i].num[2] - '0') bCnt++;
+
+				if (temp[2] == tc[i].num[2] - '0') sCnt++;
+				else if (temp[2] == tc[i].num[1] - '0' || temp[2] == tc[i].num[0] - '0') bCnt++;
+
+				if (sCnt != tc[i].strike || bCnt != tc[i].ball) break;
+				else if (i == N - 1 && sCnt == tc[i].strike && bCnt == tc[i].ball)
+					ret++;
+			}
+
+		} while (next_permutation(temp.begin(), temp.end()));
+		temp.clear();
+		return;
+	}
+
+	if (depth < vec.size()) {
+		gameNum.push_back(vec[depth]);
+		solve(depth + 1, cnt + 1);
+		gameNum.pop_back();
+
+		solve(depth + 1, cnt);
+	}
+}
+int main() {
+
+	baseball input;
+	cin >> N;
+	for (int i = 0; i < N; i++) {
+
+		cin >> input.num >> input.strike >> input.ball;
+		tc.push_back(input);
+	}
+	
+	solve(0, 0);
+	cout << ret << "\n";
+
+
+	return 0;
+}
+```
+
+#### 구현
+
+- 각기 다른 숫자들로 이루어진 세자리수가 주어진 N개의 TestCase 를 통과하면 count 를 해서 count 의 수를 출력하는 문제이다.
+
+- 각기 다른 숫자들로 숫자를 만들어야 해서 1 ~ 9가 담은 배열을 생성하여 DFS를 돌려서 조합을 구현하였다.
+
+- 이렇게 구현한 조합이 순서가 달라서 주어진 TestCase를 통과하지 못할 가능성이 있으므로 `algorithm` 헤더파일에 존재하는 순열 함수 `next_permutation` 을 이용하여 순열을 만들어서 수를 검사하였다.
+
+- 조합을 구현한 것은 **gameNum** 이라는 vector 이지만, next_permutation 을 돌리게 되면 vector 의 원소들이 뒤죽박죽이 되기에 차후에 DFS에서 빠져나와서 `pop_back()` 을 했을 경우 문제가 생길 가능성이 있다. 따라서 임시로 temp vector 를 생성하여 복사한 뒤 순열을 돌렸다.

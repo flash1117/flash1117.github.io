@@ -1,0 +1,47 @@
+---
+layout: post
+title:  "2020-01-02 TIL"
+date:   2020-01-02 13:00:59
+author: mollangzzang
+categories: TIL
+tags:	TIL js
+cover:  "/assets/TIL.png"
+---
+
+#### WebSocket
+
+- WebSocket 이란, Transport Protocol의 일종으로 Server 와 Client 간에 socket connection을 유지하여 언제든 양방향 통신 또는 데이터 전송이 가능하도록 하는 기술이다.
+현재는 Real-Time web application 구현을 위해서 사용되어 지고 있다.
+
+#### Why Use WebSocket?
+
+- Web Application에서 기존의 서버와 클라이언트 간의 통신은 대부분 HTTP를 통해서 이루어지며 HTTP는 Request / Response 기반의 Stateless protocol 이다.
+    - 더 쉬운 말로 해석하면, 웹 브라우저에서 요청에 대한 응답이 필요한 경우 (특별한 이벤트가 생겼을 때, ex) click event)에만 통신을 하는 방식으로 진행되는 프로토콜이다.
+
+- 이러한 경우 서버 쪽은 데이터가 업데이트 되는데, 클라이언트 쪽에서는 화면을 Refresh 하지 않으면 데이터가 바로 업데이트 되지 않는다. 이러한 문제점을 해결하기 위해서 생긴 것들이 Long polling 또는 Ajax였다. 하지만 chat application 같은 경우엔 실시간 업데이트가 매우 중요한 요소였기에 기존의 서버에 부담을 주는 기술 보단 WebSocket이 중요한 요소로 떠오르게 되었다.
+
+#### How It Works?
+
+- Server 와 Client 간의 WebSocket 연결은 HTTP protocol을 통하여 이루어진다. 연결이 정상적으로 이루어지면 Server 와 Client 간에 TCP/IP를 기반으로 하는 WebSocket 연결이 이루어지고 일정시간이 지나면 HTTP 연결은 자동으로 끊어지게 된다.
+
+- 기존의 WebSocket API 는 간단한 기능만을 제공하기에 대부분 **SocketJS** 또는 **Socket.IO**와 같은 오픈 소스 라이브러리를 많이 사용하고 있으며, 메세지 포맷 또한 STOMP같은 프로토콜을 같이 이용하게 된다.
+
+#### Precautions of WebSocket
+
+- 프로그램 구현에 보다 많은 복잡성이 요구된다.
+    - WebSocket 은 HTTP 와 달리 Stateful protocol이기 때문에, 서버와 클라이언트 간의 연결이 항상 유지되어야 하며 만약 비정상적으로 연결이 종료되면 그에 맞는 적절한 대응이 필요하다.
+
+- 지속적으로 서버와 클라이언트가 연결이 되어 있어야 하기 때문에 과도한 Traffic 이 생기면 부담이 생길 수 있다
+
+- 오래된 웹 브라우저에서 지원이 되지 않는다.
+
+#### Example
+
+* SNS (facebook)
+* multiplayer Game (LOL)
+* G-mail, Google Doc
+* 주식 사이트 (증권 거래 정보 사이트)
+* Chat Application
+* 위치 기반 App
+* 온라인 교육 사이트
+* 실시간 Code Share site

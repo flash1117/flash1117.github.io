@@ -1,0 +1,122 @@
+---
+layout: post
+title:  "BOJ 1726"
+date:   2020-01-08 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm BFS
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+#include <queue>
+#include <vector>
+
+using namespace std;
+
+typedef struct {
+	int x, y, dir, movecnt;
+}robot;
+
+typedef struct {
+	int x, y, dir;
+}pos;
+
+int M, N;
+int map[101][101];
+int visited[101][101];
+
+pos src, dst;
+int dx[] = { 0,0,1,-1 };
+int dy[] = { 1,-1,0,0 };
+
+bool isBoundary(int x, int y) {
+	if (x<1 || y<1 || x>M || y>N) return false;
+	return true;
+}
+
+int rotCnt(int curdir, int nextdir) {
+
+	if (curdir == nextdir) return 0;
+	else if ((curdir == 0 && nextdir == 1) || (curdir == 1 && nextdir == 0)
+		|| (curdir == 2 && nextdir == 3) || (curdir == 3 && nextdir == 2)) return 2;
+	else return 1;
+}
+
+int solve() {
+	int minCnt = M * N + 1;
+	queue <robot> q;
+	q.push({ src.x, src.y, src.dir, 0 });
+
+	while (!q.empty()) {
+
+		int curX = q.front().x;
+		int curY = q.front().y;
+		int curDir = q.front().dir;
+		int moveCnt = q.front().movecnt;
+
+		q.pop();
+
+		if (curX == dst.x && curY == dst.y) {
+			moveCnt += rotCnt(curDir, dst.dir);
+			minCnt = minCnt > moveCnt ? moveCnt : minCnt;
+			continue;
+		}
+
+		for (int i = 0; i < 4; i++) {
+
+			for (int j = 1; j <= 3; j++) {
+
+				int nextX = curX + dx[i] * j;
+				int nextY = curY + dy[i] * j;
+				int nmoveCnt = moveCnt + rotCnt(curDir, i) + 1;
+
+				if (!isBoundary(nextX, nextY) || map[nextX][nextY] == 1) break;
+				else if (isBoundary(nextX, nextY) && (visited[nextX][nextY] == 0 || visited[nextX][nextY] > nmoveCnt)
+					&& map[nextX][nextY] == 0) {
+					q.push({ nextX, nextY, i,nmoveCnt });
+					visited[nextX][nextY] = nmoveCnt;
+				}
+
+			}
+		}
+
+	}
+
+	return minCnt;
+}
+
+int main() {
+
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
+
+	cin >> M >> N;
+	for (int i = 1; i <= M; i++) {
+		for (int j = 1; j <= N; j++) {
+			cin >> map[i][j];
+		}
+	}
+
+	cin >> src.x >> src.y >> src.dir;
+	cin >> dst.x >> dst.y >> dst.dir;
+	src.dir--; dst.dir--;
+
+	cout << solve() << "\n";
+
+	return 0;
+}
+
+```
+
+#### 구현
+
+- BFS에서 visited를 찍었을 경우, 먼저 도착한 노드가 보통은 더 빠른경우이지만 이 문제에서는 로봇의 회전수가 추가 되었기 때문에 뒤에 도착한 노드가 결과적으로 더 적은 명령을 받았을 가능성이 있다.
+
+- rotCnt 함수를 통하여 180도를 회전해야하는 경우는 2를 반환하는 식으로 몇번 회전해야하는지 반환해주었다.
+
+- 바깥의 반복문을 통하여 4방향을 전부 순회해주었고, 안의 반복문을 통해서 1 , 2 , 3 을 가는 경우의 수를 탐색해주었다. 다만, 탐색하는 도중 범위의 바깥으로 나가거나 벽을 만난다면 뚫고 갈 수는 없기에 바로 `break`를 해주었다.
+
+- `visited[nextX][nextY] == 0 || visited[nextX][nextY] > nmoveCnt` 를 통하여 처음 방문을 했거나 이미 방문을 했던 지점이라도 더 빠른 경로면 탐색할 수 있도록 설정하였다.
+

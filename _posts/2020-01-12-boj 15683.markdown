@@ -1,0 +1,154 @@
+---
+layout: post
+title:  "BOJ 15683"
+date:   2020-01-12 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm BruteForce
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+
+using namespace std;
+
+int N, M, ret, cctvNum;
+int map[8][8];
+int copyMap[8][8];
+int pick_[65];
+
+void move(int x, int y, int dir) {
+
+	if (dir == 0) { // north
+		for (int i = x - 1; i >= 0; i--)
+		{
+			if (map[i][y] == 6) break;
+			else if (map[i][y] > 0) continue;
+			map[i][y] = -1;
+		}
+	}
+	else if (dir == 1) { // east
+		for (int i = y + 1; i < M; i++) {
+			if (map[x][i] == 6) break;
+			else if (map[x][i] > 0) continue;
+			map[x][i] = -1;
+		}
+	}
+	else if (dir == 2) { // south
+		for (int i = x + 1; i <N; i++)
+		{
+			if (map[i][y] == 6) break;
+			else if (map[i][y] > 0) continue;
+			map[i][y] = -1;
+		}
+	}
+	else if (dir == 3) { // west
+		for (int i = y - 1; i >=0 ; i--) {
+			if (map[x][i] == 6) break;
+			else if (map[x][i] > 0) continue;
+			map[x][i] = -1;
+		}
+	}
+}
+
+void cntBlindSpot() {
+	int cnt = 0;
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < M; j++) {
+			if (map[i][j] == 0) cnt++;
+		}
+	}
+	ret = ret > cnt ? cnt : ret;
+}
+
+void init() {
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < M; j++)
+			map[i][j] = copyMap[i][j];
+	}
+}
+
+void solve(int cnt) {
+
+	if (cnt == cctvNum) {
+		init();
+		int index = 0;
+		
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < M; j++) {
+				if (map[i][j] == 1) {
+					move(i, j, pick_[index++]-1);
+				}
+				else if (map[i][j] == 2) {
+					if (pick_[index] == 1 || pick_[index] == 3) {
+						move(i, j, 0); move(i, j, 2);
+					}
+					else if (pick_[index] == 2 || pick_[index] == 4) {
+						move(i, j, 1); move(i, j, 3);
+					}
+					index++;
+				}
+				else if (map[i][j] == 3) {
+
+					int next = pick_[index] % 4;
+					move(i, j, pick_[index++] - 1);
+					move(i, j, next);
+					
+				}
+				else if (map[i][j] == 4) {
+					int next = pick_[index] % 4;
+					int nnext = (pick_[index] + 1) % 4;
+
+					move(i, j, pick_[index++] - 1);
+					move(i, j, next);
+					move(i, j, nnext);
+									
+				}
+				else if (map[i][j] == 5) {
+					move(i, j, 0); move(i, j, 1); move(i, j, 2); move(i, j, 3);
+					index++;
+				}
+			}
+		}
+		
+		cntBlindSpot();
+		return;
+	}
+
+
+	for (int i = 1; i <= 4; i++) {
+		pick_[cnt] = i;
+		solve(cnt + 1);
+	}
+
+}
+
+int main() {
+
+	cin >> N >> M;
+	ret = M * N;
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < M; j++) {
+			cin >> map[i][j];
+			copyMap[i][j] = map[i][j];
+			if (map[i][j] > 0 && map[i][j] < 6) cctvNum++;
+		}
+	}
+
+	solve(0);
+	cout << ret << "\n";
+
+	return 0;
+}
+```
+
+#### 구현
+
+- N과 M의 최대 크기는 8x8이기 때문에, cctv의 갯수를 처음에 몇개인지 count를 하고 시작하였다.
+
+- pick 함수에는 1, 2, 3, 4 가 들어갈 수 있으며 조합을 구현하여 각각 선택한 direction을 넣어주었다.
+
+- 이렇게 cctv 들이 선택한 방향이 전부 선택되었다면 해당 방향에 맞도록 map을 재구성해주었고 변하지 않은 map의 갯수를 count 해서 결과값과 비교해주었다.
+
+- 주의해야 할 점은 map의 수가 양수 일때는 `continue` 와 같은 식으로 해당 맵을 건너뛰고 작업을 계속 수행해야 한다는 것이다.

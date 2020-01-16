@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "2020-01-16 TIL"
+date:   2020-01-16 13:00:59
+author: mollangzzang
+categories: TIL
+tags:	TIL Vue
+cover:  "/assets/TIL.png"
+---
+
+npm 5.0 버젼 이전에는 `npm install` 을 함에 있어서 `--save` 를 붙여서 설치를 하게 되면 package.json 에 dependencies에 들어 갔었는데 이후 버젼부터는 `--save` 키워드를 추가적으로 입력해주지 않아도 `--save` 옵션이 default로 들어가게 되었다.
+

@@ -1,0 +1,80 @@
+---
+layout: post
+title:  "BOJ 15685"
+date:   2020-02-01 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm Simulation
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int N;
+int map[101][101];
+int dx[] = { 0,-1,0,1 };
+int dy[] = { 1,0,-1,0 };
+
+void solve(int x, int y, int d, int g) {
+	
+	vector <int> dir;
+	int nextX = x + dx[d];
+	int nextY = y + dy[d];
+
+	map[x][y] = 1;
+	map[nextX][nextY] = 1;
+	dir.push_back(d);
+	while (g--) {
+		int bound = dir.size();
+		for (int i = bound-1; i >=0; i--) {
+			int tmp = dir[i] + 1;
+			tmp = tmp > 3 ? 0 : tmp;
+			dir.push_back(tmp);
+			nextX += dx[tmp];
+			nextY += dy[tmp];
+			map[nextX][nextY] = 1;
+		}
+	}
+
+}
+int main() {
+	int x, y, g, d;
+
+	cin >> N;
+	for (int i = 0; i < N; i++) {
+		cin >> x >> y >> d >> g;
+		solve(y, x, d, g);
+	}
+	int cnt = 0;
+	for (int i = 0; i < 100; i++) {
+		for (int j = 0; j < 100; j++) {
+			if (map[i][j] == 1 && map[i + 1][j] == 1 && map[i][j + 1] && map[i + 1][j + 1]) cnt++;
+		}
+	}
+
+	if (map[99][99] == 1 && map[100][99] == 1 && map[99][100] && map[100][100]) cnt++;
+	cout << cnt << "\n";
+	return 0;
+}
+
+```
+
+#### 구현
+
+- 테스트케이스 2번의 경우 4세대의 경우를 그림으로 그려놓은 예시가 있다. (2,7) 방향에서 시작을 하게 되는데 방향을 숫자로 넣어보게 된다면 `3 0 1 0 1 2 1 0 1 2 3 2 1 2 1 0` 과 같은 식으로 작성이 된다.
+
+- 0세대의 경우 `3`
+- 1세대의 경우 `3  0`
+- 2세대의 경우 `3 0  1 0`
+- 3세대의 경우 `3 0 1 0  1 2 1 0`
+- 4세대의 경우 `3 0 1 0 1 2 1 0  1 2 3 2 1 2 1 0`
+
+- 새로운 선분이 그려질 때 보기 쉽도록 띄워쓰기를 한번 더 하였다. 위 숫자들을 보고 있으면 규칙을 알 수 있는데, 새롭게 추가되는 선분들은 전의 세대의 끝점 부터 순차적으로 순회하면서 +1 씩 증가시켜서 작성되는 것을 알 수 있다.
+
+- 따라서 solve 함수에서 direction 들을 저장할 dir라는 vector를 생성하였고, 매개변수로 받은 g 값을 통해 세대의 수만큼 반복문을 돌리면서 선분이 그려질 때마다 `map[nextX][nextY] = 1` 이라는 코드를 통해 방문 지점을 체크해주었다.
+
+- main 함수에서 map 의 크기는 처음부터 0 - 100 까지로 정해져있었기에 순회하면서 4개의 꼭지점이 1이면 count 하였다. 다만 최하단의 점은 범위에 들어가 있지 않아서 if 문을 하나 더 추가해주었다.

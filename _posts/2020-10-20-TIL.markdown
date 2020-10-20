@@ -1,0 +1,77 @@
+---
+layout: post
+title: "TCP/IP 5계층"
+date: 2020-10-19 13:00:59
+author: mollangzzang
+categories: TIL
+tags: TIL network
+cover: "/assets/TIL.png"
+---
+
+# TCP/IP 5계층
+
+1. Application 계층
+
+   - Protocol : HTTP, SMTP
+   - Protocol Data Unit : Message
+
+2. Transport 계층
+
+   - Protocol : TCP / UDP
+   - Protocol Data Unit : Segment
+
+3. Network 계층
+
+   - Protocol : IP
+   - Protocol Data Unit : Datagram
+
+4. Data Link 계층
+
+   - Protocol : Ethernet, Wi-Fi
+   - Protocol Data Unit : Frames
+
+5. Physical 계층
+
+   - Protocol Data Unit : Bits
+
+## Application Layer
+
+> 이메일, 웹 브라우저, 파일 전송 등 통신하기 위해 필요한 서비스를 제공한다.
+
+## Transport Layer
+
+> 네트워크 계층이 두 개의 개별 노드간 데이터를 전송하는 방법을 나타낸다면, 전송계층에서는 특정 클라이언트와 서버 프로그램사이에 데이터 통신을 제공한다.
+
+> 가장 널리 알려진 프로토콜은 TCP이며, IP와는 다르다. 각각 다른 계층에서 다른 목적을 가진 프로토콜이다.
+
+> 전송 계층에서 많이 사용되는 다른 프로토콜은 UDP가 있다.
+
+> 네트워크 계층에서 보내온 데이터 정렬, 오류 정정 등을 수행하고 신뢰할 수 있는 통신을 확보한다.
+
+## Network Layer
+
+> 네트워크 계층은 **라우터**를 통해 서로 다른 네트워크가 서로 통신 할 수 있도록 논리 주소를 결정하는 계층이다. 대표적으로 라우터로 함께 연결된 네트워크 모음이 우리가 알고 있는 인터넷이며, **네트워크 계층을 종종 인터넷 계층이라고도 한다.**
+
+> 네트워크 계층에서 가장 많이 사용되는 프로토콜은 IP(Internet Protocol)이다.
+
+## DataLink Layer
+
+> 데이터링크 계층에서는 물리계층에서 수신되는 신호를 해석하는 방법을 정의한다.
+
+> 네트워크 기기 간 데이터 전송 및 물리 주소를 결정한다.
+
+> 데이터링크 계층에서 가장 널리 쓰이는 프로토콜은 이더넷이다. WiFi 프로토콜또한 데이터 링크 계층에 속한다.
+
+## Physical Layer
+
+> 물리 계층은 컴퓨터와 컴퓨터를 연결하는 **물리적 장치, 전기 신호 변환/제어**를 의미한다.
+
+> 물리계층에는 네트워크 케이블의 사양뿐 아니라 데이터가 전송되는 방식 또한 포함된다.
+
+## 캡슐화 / 역캡슐화
+
+> 서로 다른 계층 간 데이터를 주고받는 과정에서 캡슐화와 역캡슐화가 발생하는데, 응용 계층에서 요청 데이터가 생성되고 나면 **응용 -> 전송 -> 네트워크 -> 데이터 링크** 순으로 전달 된다. 이 때 계층 별로 맡은 역할에 따라 추가적으로 정보가 생성되며, 이것을 **헤더**의 형태로 하나씩 붙여나가게 된다. 이렇듯 헤더를 차례대로 붙여가는 과정을 **캡슐화**라고 한다. 반대로 헤더를 차례대로 제거하면서 데이터를 전달하는 과정을 **역캡슐화**라고 한다.
+
+### Ref.
+
+https://zion830.tistory.com/105

@@ -1,0 +1,125 @@
+---
+layout: post
+title: "BOJ 1967"
+date: 2020-10-31 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags: Algorithm tree
+cover: "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+#include <queue>
+#include <vector>
+
+using namespace std;
+
+int N;
+vector<pair<int, int>> tree[10001];
+pair<int,int> saveParentNode[10001];
+int maxTreeDiameter;
+int nodeMaxWeight[10001];
+
+void travelTree(int startNode) {
+
+	bool visited[10001];
+	for (int i = 1; i <= N; i++) visited[i] = false;
+
+	queue<pair<int, int>> q;
+	visited[startNode] = true;
+	q.push(make_pair(saveParentNode[startNode].first, saveParentNode[startNode].second));
+	visited[saveParentNode[startNode].first] = true;
+//	cout << "\n";
+//	cout << startNode << "\n";
+	while (!q.empty()) {
+
+		int curNode = q.front().first;
+		int weightSum = q.front().second;
+
+		q.pop();
+
+		maxTreeDiameter = maxTreeDiameter > weightSum ? maxTreeDiameter : weightSum;
+
+//		cout << curNode << " " << weightSum << "\n";
+
+
+		for (int i = 0; i < tree[curNode].size(); i++) {
+
+			int nextNode = tree[curNode][i].first;
+			int nextWeight = tree[curNode][i].second;
+
+			if (!visited[nextNode]) {
+
+				q.push(make_pair(nextNode, weightSum + nextWeight));
+				visited[nextNode] = true;
+			}
+
+
+		}
+
+		int parentNode = saveParentNode[curNode].first;
+		int nWeight = saveParentNode[curNode].second;
+
+		if (parentNode != 0 && !visited[parentNode]) {
+			q.push(make_pair(parentNode, weightSum + nWeight));
+			visited[parentNode] = true;
+		}
+
+
+
+	}
+
+
+}
+
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+
+	cin >> N;
+	for (int i = 0; i < N - 1; i++) {
+
+		int parentNode, childNode, weight;
+
+		cin >> parentNode >> childNode >> weight;
+
+		tree[parentNode].push_back(make_pair(childNode, weight));
+		saveParentNode[childNode].first = parentNode;
+		saveParentNode[childNode].second = weight;
+
+		nodeMaxWeight[parentNode] = nodeMaxWeight[parentNode] > weight ? nodeMaxWeight[parentNode] : weight;
+	}
+
+
+
+	for (int i = 1; i <= N; i++) {
+
+		if (tree[i].empty()) {
+
+			int pNode = saveParentNode[i].first;
+			int pWeight = saveParentNode[i].second;
+
+			if(nodeMaxWeight[pNode] == pWeight)
+				travelTree(i);
+		}
+	}
+
+	cout << maxTreeDiameter << "\n";
+
+	return 0;
+}
+
+```
+
+## 문제 해결 방법
+
+BFS로 접근하였다. `saveParentNode` 는 `pair<int,int>` 로 선언하여 부모노드, 가중치의 값을 저장해주었고, tree는 자식노드, 가중치값을 넣어주었다.
+탐색을 함에 있어서 가장 큰 지름값을 구하기 위해서는 leaf node부터 시작을 해야해서 N만큼 순회하며 tree가 비어있는 경우 leaf node라고 가정하고 BFS를 통한 완전탐색을 해주었다.
+
+처음 답은 1128ms가 걸리기에, 시간을 단축시키기 위해서 `nodeMaxWeight` 를 통해 해당 노드의 가장 큰 가중치 값이랑 일치하는 경우에만 완전 탐색을 해주었다.
+총 걸린시간은 316ms 이며, 다른분들이 작성한 코드는 DFS를 두번 써서 트리의 지름을 구해서 훨씬 시간이 단축된 것 같았다.

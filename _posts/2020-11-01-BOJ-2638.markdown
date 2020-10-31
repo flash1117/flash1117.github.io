@@ -1,0 +1,140 @@
+---
+layout: post
+title: "BOJ 1991"
+date: 2020-11-01 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags: Algorithm BFS
+cover: "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+#include <queue>
+#include <vector>
+
+using namespace std;
+
+int N, M;
+int map[100][100];
+bool visited[100][100];
+
+int dx[] = { 0,0,-1,1 };
+int dy[] = { -1,1,0,0 };
+
+vector<pair<int, int>> cheesePos;
+void initVisitedArray() {
+
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < M; j++) {
+			visited[i][j] = false;
+		}
+	}
+
+}
+
+bool isBoundary(int x, int y) {
+
+	if (x<0 || y<0 || x>N - 1 || y>M - 1) return false;
+	return true;
+
+}
+
+void getMeltCheesePosition(int startX, int startY) {
+
+	queue<pair<int, int>> q;
+	q.push(make_pair(startX, startY));
+	visited[startX][startY] = true;
+
+	while (!q.empty()) {
+
+		int curX = q.front().first;
+		int curY = q.front().second;
+		q.pop();
+
+		for (int i = 0; i < 4; i++) {
+			int nextX = curX + dx[i];
+			int nextY = curY + dy[i];
+
+			if (isBoundary(nextX, nextY) && !visited[nextX][nextY]) {
+				visited[nextX][nextY] = true;
+				if(map[nextX][nextY] == 0)
+					q.push({ nextX, nextY });
+
+			}
+			else if (isBoundary(nextX, nextY) && visited[nextX][nextY] && map[nextX][nextY] == 1) {
+
+				cheesePos.push_back(make_pair(nextX, nextY));
+
+			}
+		}
+	}
+
+
+}
+
+void meltCheese() {
+
+	for (int i = 0; i < cheesePos.size(); i++) {
+
+		int X = cheesePos[i].first;
+		int Y = cheesePos[i].second;
+
+		map[X][Y] = 0;
+	}
+}
+
+int getMeltTime() {
+
+	int meltTime = 0;
+	while (1) {
+
+		initVisitedArray();
+
+		getMeltCheesePosition(0,0);
+
+
+		if (cheesePos.empty()) {
+
+			return meltTime;
+		}
+		else {
+			meltTime++;
+			meltCheese();
+			cheesePos.clear();
+		}
+	}
+
+}
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	cout.tie(0);
+
+	cin >> N >> M;
+
+
+	for (int i = 0; i < N; i++) {
+
+		for (int j = 0; j < M; j++) {
+
+			cin >> map[i][j];
+
+
+		}
+	}
+
+	cout << getMeltTime() << "\n";
+
+	return 0;
+}
+
+```
+
+전형적인 BFS를 통한 완전탐색 문제이다.
+첫번째 시도에서 한번 틀렸었는데, 문제를 제대로 읽지 않아서 생긴 실수였다.
+문제의 조건은 **외부의 공기와 맞닿은 치즈의 변이 2개 이상**인 경우였고, 내가 저지른 실수는 내부의 공기또한 같이 체크해주어서 생긴 오답이였다.
+
+현재 작성한 코드로부터 시간을 줄이려면 `getMeltCheesePosition` 에서 `visited = true` 인 경우 `cheesePos` 에 녹일 치즈의 좌표를 담고 있는데, 이러면 중복된 값이 들어갈 경우가 생긴다. bool type으로 선언된 visited를 int로 바꾸어서 체크해주면 더 좋을 것 같다.

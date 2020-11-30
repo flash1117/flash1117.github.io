@@ -1,7 +1,7 @@
 ---
 layout: page
-title: 프로필
-permalink: /프로필/
+title: About Me
+permalink: /about/
 main_nav: true
 ---
 

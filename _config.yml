@@ -3,7 +3,7 @@
 plugins:
   #  - jekyll-archives # Sorry, not GitHub pages friendly!
   - jekyll-sitemap
-  - jekyll-paginate-v2
+  - jekyll-paginate
 
 exclude:
   - "/vendor/"
@@ -26,15 +26,13 @@ logo: "/assets/logo.png"
 
 # Build settings
 markdown: kramdown
+per_page: 5
+permalink: "/page:num/"
 inter_post_navigation: false
 highlightjs_theme: "monokai-sublime"
 
 # Pagination Settings
 # https://github.com/sverrirs/jekyll-paginate-v2/blob/master/README-GENERATOR.md#site-configuration
-pagination:
-  enabled: true
-  per_page: 5
-  permalink: "/page/:num/"
 
 # Archive settings (see https://github.com/jekyll/jekyll-archives/)
 #jekyll-archives:
@@ -53,15 +51,15 @@ disqus_shortname: CommentTest01
 # ga_tracking_id: "UA-XXXX-1"
 
 # Category descriptions (for archive pages)
-descriptions:
-  - cat: Algorithm
-    desc: "Posts algorithm problem solve."
+# descriptions:
+#  - cat: Algorithm
+#    desc: "Posts algorithm problem solve."
 
-  - cat: TIL
-    desc: "Posts Today I Learn."
+#  - cat: TIL
+#    desc: "Posts Today I Learn."
 
-  - cat: Web
-    desc: "Posts about Web"
+#  - cat: Web
+#    desc: "Posts about Web"
 
 # Social icons and sharing options
 #

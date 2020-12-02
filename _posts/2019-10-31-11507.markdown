@@ -1,0 +1,63 @@
+---
+layout: post
+title:  "BOJ 11057"
+date:   2019-10-31 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm DynamicProgramming 동적계획법
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+
+using namespace std;
+
+int N;
+long long dp[1001][11];
+
+void solve() {
+
+	long long sum = 0, ret =0;
+	// 1 1 1 1 1 1 1 1 1 1
+	// 10 + 9 + 8 + 7 + 6 + 5 + 4 + 3 + 2 + 1
+	// 55 + 45 + 36 + 28 + 21 +15 + 10 +6 +3 + 1
+	// 220 + 165 + 120 + 84 + 56 + 35 + 20 + 10 + 4 +1
+
+	for (int i = 1; i <= 10; i++) {
+		dp[1][i] = 1;
+		dp[2][i] = i;
+	}
+		
+	for (int i = 3; i <= N; i++) {
+		sum = 0;
+		for (int j = 1; j <= 10; j++) {
+			sum += dp[i - 1][j];
+			dp[i][j] = sum % 10007;
+		}
+	}
+
+	for (int i = 1; i <= 10; i++) {
+		ret += dp[N][i];
+		if (ret > 10007) ret %= 10007;
+	}
+
+	cout << ret << "\n";
+}
+
+int main() {
+
+	cin >> N;
+
+	solve();
+
+
+	return 0;
+}
+```
+
+규칙이 있는 것 같긴한데, 규칙을 제대로 찾아서 푼 것 같지는 않은 문제이다.
+
+수들의 연관점을 찾아보자면 예를 들어 3자리수 일때, 맨 앞자리의 수가 **0** 이라고 한다면 뒤에 두자리 수들은 전 단계에서 계산을 했으니 모든 경우의수를 가져오면 될 것이고 앞자리가 **1** 이라고 한다면 증가한 만큼의 경우의 수를 빼주어야 할 것이다.
+
+하지만 이걸 dp배열에 깔끔하게 넣으면서 풀 방법이 없을까 생각은 해보았지만, 그렇게 깔끔하게 나온 것 같지 않다.

@@ -1,0 +1,77 @@
+---
+layout: post
+title:  "BOJ 9465"
+date:   2019-10-29 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm DynamicProgramming 동적계획법
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+
+using namespace std;
+
+int T, N;
+int map[3][100002];
+int dp[3][100002];
+
+void init() {
+
+	for (int i = 1; i <= 2; i++) 
+		for (int j = 1; j <= N; j++)
+			map[i][j] = 0;
+}
+
+void solve() {
+
+	dp[1][1] = map[1][1];
+	dp[2][1] = map[2][1];
+
+	for (int j = 2; j <= N; j++) {
+		for (int i = 1; i <= 2; i++) {
+
+			if (i == 1) 
+				dp[i][j] = (dp[i + 1][j - 1] + map[i][j] > dp[i][j - 1]) ? dp[i + 1][j - 1] + map[i][j] : dp[i][j - 1];
+			else
+				dp[i][j] = (dp[i - 1][j - 1] + map[i][j] > dp[i][j - 1]) ? dp[i - 1][j - 1] + map[i][j] : dp[i][j - 1];
+			
+		}
+	}
+	int ret = (dp[1][1] > dp[2][1]) ? dp[1][1] : dp[2][1];
+	if (N == 1)
+		cout << ret << "\n";
+	else {
+		ret = (dp[1][N] > dp[2][N]) ? dp[1][N] : dp[2][N];
+		cout << ret << "\n";
+	}
+	
+}
+
+int main() {
+
+	cin >> T;
+	while (T--) {
+
+		cin >> N;
+		for (int i = 1; i <= 2; i++) {
+			for (int j = 1; j <= N; j++) {
+				cin >> map[i][j];
+			}
+		}
+
+		solve();
+		init();
+	}
+	return 0;
+}
+```
+
+이 문제에서 고려해야 할 것은 현재 위치에 값을 더하느냐 마느냐 였는데,
+
+1. 현재 위치의 값을 포함하게 된다면 dp 대각선 방향의 값에 현재 값을 더하게 된다.
+
+2. 현재 위치를 포함하게 되지 않는다면 전의 값을 그대로 가져오게 된다.
+
+이렇게 두 개의 경우의 수를 비교해서 더 큰 값을 출력하면 된다.

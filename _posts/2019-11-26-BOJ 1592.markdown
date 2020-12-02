@@ -1,0 +1,79 @@
+---
+layout: post
+title:  "BOJ 1592"
+date:   2019-11-26 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm Simulation
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+#include <queue>
+
+using namespace std;
+
+int N, M, L;
+int cntArray[1001];
+
+bool isBoundary(int x)
+{
+	if (x<1 || x>N) return false;
+	return true;
+}
+
+int solve() {
+
+	cntArray[1] = 1;
+	queue <pair<int, int>> q;
+	q.push(make_pair(1, 0));
+
+	while (!q.empty()) {
+
+		int cur = q.front().first;
+		int cnt = q.front().second;
+		q.pop();
+
+		if (cntArray[cur] == M) return cnt;
+
+		int next = 0;
+
+		if (cntArray[cur] % 2 == 1) { // 홀수 -> 시계
+
+			next = cur + L;
+			if (!isBoundary(next)) 
+				next -= N;
+			q.push(make_pair(next, cnt + 1));
+			cntArray[next]++;
+		}
+		else { // 짝수 -> 반시계
+
+			next = cur - L;
+			if (!isBoundary(next)) next += N;
+			q.push(make_pair(next, cnt + 1));
+			cntArray[next]++;
+		}
+
+	}
+
+	return -1;
+}
+
+
+int main() {
+
+	cin >> N >> M >> L;
+	cout << solve() << "\n";
+
+	return 0;
+}
+```
+
+관련 알고리즘을 찾아보면 유클리드 호제법인데, 뭐였는지 기억이 잘 나지 않는다.
+
+#### 구현
+
+짝수일때는 L만큼 반시계 방향으로, 홀수일때는 L만큼 시계방향으로 공을 던지게 된다. 고려할 점이라고 한다면
+
+- 현재 공을 들고 있는 사람인 cur 에서 L 만큼 더하거나 빼는 경우에 범위를 초과할 경우에 N만큼 더하거나 빼주어야 한다.

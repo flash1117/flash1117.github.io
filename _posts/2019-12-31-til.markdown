@@ -1,0 +1,19 @@
+---
+layout: post
+title:  "2019-12-31-TIL"
+date:   2019-12-31 13:00:59
+author: mollangzzang
+categories: TIL
+tags:	TIL git
+cover:  "/assets/TIL.png"
+---
+
+git push를 하는데, `LF will be replaced by CRLF ...` 라는 경고 메세지가 나타났는데 이게 뭔가 싶어 찾아봤더니 Mac or Linux 를 사용하는 개발자가 Windows 를 사용하는 개발자와 협업을 했을 때 나타나는 오류라고 한다.
+
+Unix 시스템에서는 한 줄의 끝이 LF(Line Feed)로 이루어지는 반면, Windows에서는 줄 하나가 CR(Carriage Return)와 LF 인 CRLF로 이루어지기 때문이다. 따라서 git이 어떤 것을 선택해야할지 모르고 헷갈리는 상태인 것이다.
+
+해결방법은 간단한데, `core.autocrlf` 를 키는 것이다. 이 기능은 자동변환을 해주는 기능이며 windows 의 경우 `git config core.autocrlf true` Mac 이나 Linux의 경우에는 방금 명령어 뒤에 `input` 을 추가로 입력해주면 해결 된다.
+
+혹시나 위와 같은 기능을 끄고 싶다면 true 부분을 false 로 대체하면 된다.
+
+- react 는 프레임워크인줄 알았는데 , 라이브러리이다.

@@ -1,0 +1,56 @@
+---
+layout: post
+title:  "BOJ 1932"
+date:   2019-10-18 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm DynamicProgramming 동적계획법
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+int N;
+int dp[501][501];
+int map[501][501];
+
+int solve() {
+
+	int maxNum = 0;
+	for (int i = 1; i <= N; i++) {
+
+		for (int j = 1; j <= i; j++) {
+
+			if (j == 1) dp[i][j] = dp[i - 1][j] + map[i][j];
+			else if (j == i) dp[i][j] = dp[i-1][j-1] + map[i][j];
+			else 
+				dp[i][j] = max(dp[i - 1][j - 1], dp[i - 1][j]) + map[i][j];
+			if (dp[i][j] > maxNum) maxNum = dp[i][j];
+		}
+	}	
+	return maxNum;
+}
+
+int main() {
+
+	
+	cin >> N;
+	for (int i = 1; i <= N; i++) 
+		for (int j = 1; j <= i; j++) 
+			cin >> map[i][j];
+	
+	cout << solve();
+
+	return 0;
+}
+```
+
+처음 문제를 풀 때 왠지 모르게 너무 어렵게 생각을 했었다. 
+
+`dp[i][j]` 가 있을 때 제일 끝에 부분들만 예외 처리를 해주고 나머지 노드들은 바로 위의 노드와 왼쪽 위 노드 들을 체크 해주면 되는 문제였는데, 비효율 적인 코드가 있는지 다른 사람들이 작성한 코드들이 비해 시간이 많이 걸렸다.
+
+그리고 dp 크기를 `501 x 501` 로 선언을 했지만, 사실 저중에 사용하게 되는 부분은 대각선으로 반 자른거 정도 이기 때문에 크기를 줄일 필요성이 있을 것 같다.

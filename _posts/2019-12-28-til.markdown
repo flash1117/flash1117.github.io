@@ -1,0 +1,44 @@
+---
+layout: post
+title:  "Front End - React"
+date:   2019-12-28 13:00:59
+author: mollangzzang
+categories: TIL
+tags:	TIL js
+cover:  "/assets/TIL.png"
+---
+
+#### React
+
+- function 을 이용한 함수형 과 class 를 이용한 클래스형이 있다. 
+
+- React 에서는 사용자 정의 tag 를 Component 라고 한다.
+    - Component 를 사용하게 되면 가독성과 재사용성이 매우 좋아진다.
+    - 유지보수가 좋아진다.
+
+node js 로 만든 npm 이라는 tool 을 사용하게 되면, 간단한 명령어를 통하여 설치가 가능해진다
+
+`npm create-react-app` 명령어를 통하여 react 개발 환경을 구성하였으며, vs code 에서는 `Ctrl + J` 를 통하여 터미널을 여는 것이 가능한데,
+이를 통하여 컴파일을 하고 결과를 확인 할 수 있다.
+    - 최신 버젼이 아닌 특정 버젼을 선택하여 설치를 원하는 경우에는 위 명령어 뒤에`@app_version` app_version 에 해당하는 곳에 원하는 버젼을 집어넣어서 설치가 가능하다.
+
+- 보통 개발을 하게 되면 debug 와 release 둘 중 하나를 고르게 되는데 debug 는 개발자 환경 release 는 배포용 정도로 보면 간단할 것 같다. 당연히 react 에서도 그러한 것이 존재하며 개발자 환경에서는 `npm run start` 명령어를, 배포환경을 만들기 위해서는 `npm run build` 를 통하여 빌드를 할 수 있다. 배포환경을 생성하게 되면 필요없는 정보 (공백 , 필요없는 에러메세지) 등을 삭제하여 용량을 줄이는 행동 등을 통해 최적화를 해주게 된다.
+
+- 여담으로 npm 안에는 npx 라는 것이 있는데 npm을 통하지 않고 npx 를 통해서 설치를 해주게 되면 일회성으로 설치하고 지우기까지 한번에 다해주기 때문에 우리가 반드시 최신버젼을 깔지 않아도, npx 를 통해 항상 최신버젼으로 이용할 수 있다.
+
+- Component 는 하나의 최상위 태그로 시작해야한다.
+
+- Component 는 HTML을 보다 객체 지향적으로, 보기 쉽게 정리할 수 있게 해준다.
+
+- props 는 attribute (속성) 과 같은데, 차이점을 두기 위해서 props 라는 이름을 채택한 것 같다.
+    - `this.props.이름` 을 통해서 html 을 보다 동적으로 생성 할 수 있게 해준다.
+    - 여기서 **이름**은 사용자 정의 태그에서 넘겨주게 된다.
+        - `<Subject></Subject>` 라는 사용자 태그를 우리가 생성했을 때, `<Subject title="WEB" sub="world wide web!">` 와 같은 코드를 통하여 **title** 과 **sub** 를 넘겨주게 되고 이러한 것이 앞서 말한 **이름**에 해당하는 부분이다.
+
+#### HTML
+
+- html 을 보다보면 header , nav, article 을 볼 수 있는데 기능적으로는 특별한 기능이 없으나 header 와 navigator , article 로 나누어 보기 편하게 해준다.
+
+#### js 의 <!-- //-->
+
+- `<!-- //-->` 는 HTML의 주석이며, 과거에 js엔진이 있는 브라우저의 경우 js 소스로 인식하게 되지만 없는 경우에 function , for, if 등의 html 파서가 모르는 내용으로 인해 오류가 생기지 않도록 시작과 끝에 붙여주었었다. 하지만 지금 거의 모든 브라우저에는 js엔진을 내장하고 있기에 HTML 주석처리를 할 필요는 없다.

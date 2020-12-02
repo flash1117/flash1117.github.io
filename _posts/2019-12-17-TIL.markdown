@@ -1,0 +1,76 @@
+---
+layout: post
+title:  "C++ Sort 사용자 함수"
+date:   2019-12-17 13:00:59
+author: mollangzzang
+categories: TIL
+tags:	TIL C++ 구현
+cover:  "/assets/TIL.png"
+---
+
+```
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+typedef struct {
+
+	int country, g, s, c;
+}pos;
+
+vector <pos> input;
+int N, K;
+
+bool compare(pos &src, pos &dst) {
+
+	if(src.g != dst.g)
+		return src.g > dst.g;
+	else {
+
+		if (src.s != dst.s) return src.s > dst.s;
+		else return src.c > dst.c;
+	}
+	
+}
+
+int main() {
+
+	cin >> N >> K;
+	pos temp;
+	for (int i = 0; i < N; i++) {
+
+		cin >> temp.country >> temp.g >> temp.s >> temp.c;
+		input.push_back(temp);
+	}
+
+	sort(input.begin(), input.end(), compare);
+	for (int i = 0; i < input.size(); i++) {
+
+		if (input[i].country == K) {
+
+			if (i > 0) {
+				for (int j = i - 1; j >= 0; j--) {
+					if (input[j].g == input[i].g && input[j].s == input[i].s && input[i].c == input[j].c);
+					else {
+						cout << j + 2 << "\n";
+						break;
+					}
+
+				}
+			}
+			else cout << i + 1 << "\n";
+			break;
+		}
+	}
+
+	return 0;
+}
+```
+
+BOJ 8979 문제이다.
+
+C++ Sort 에서 오름차순 내림차순만 사용했었기에 사용자 함수를 구현하는 방법을 몰랐었다. 하지만 위와 같은 문제에서 따로 함수를 만들어서 하나 하나 비교하는 것이 보기에 깔끔하지 못한 것 같아 다시 공부를 했다.
+
+사용자 정의 함수를 구현하려면 bool 타입으로 생성을 해야하며, true 가 되는 방향으로 sort 가 된다. 처음 구현을 할 때에 if , else if 로 경우의 수를 하나하나 구현을 해서 함수를 작성했었는데, 그럴 필요가 없이 위와 같이 구현하면 정상적으로 잘 작동하였다. 다만 주의해야 할 것은 구조체를 비교하였기 때문에,sort를 할 때에도 정확한 자료형을 넘겨줘야 한다는 것 정도인 것 같다.

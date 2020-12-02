@@ -1,0 +1,97 @@
+---
+layout: post
+title:  "BOJ 11722"
+date:   2019-10-23 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm DynamicProgramming 동적계획법
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+
+using namespace std;
+
+int N, input[1001], dp[1001];
+
+void print() {
+
+   for (int i = 1; i <= N; i++) {
+      cout << dp[i] << " ";
+   }
+   cout << endl;
+}
+
+void solve() {
+   
+   int maxNum = 1;
+   for (int i = N; i > 0; i--) {
+
+      for (int j = i + 1; j <= N+1; j++) {
+
+         if (input[i] > input[j])
+            dp[i] = (dp[j] + 1 > dp[i]) ? dp[j] + 1 : dp[i];
+      }
+      maxNum = (dp[i] > maxNum) ? dp[i] : maxNum;
+   }
+   print();
+   cout << maxNum;
+}
+
+int main() {
+
+   cin >> N;
+   for (int i = 1; i <= N; i++)
+      cin >> input[i];
+
+   solve();
+
+   return 0;
+}
+```
+
+감소되는 부분 중 가장 긴 수열을 찾는 문제이다. 이미 몇번 풀어봤기 때문에 순식간에 풀 것이라고 생각을 했으나... 위의 코드는 틀렸다.
+아무리 쳐다봐도 왜 틀렸는지 모르겠어서 입력값을 뒤집은 다음 증가하는 수열로 짜봤다.
+
+```
+#include <iostream>
+
+using namespace std;
+
+int N, input[1001], dp[1001];
+
+void solve() {
+
+	int maxLen = 1;
+
+	for (int i = 1; i <= N; i++) {
+
+		for (int j = i - 1; j >= 0; j--) {
+
+			if (input[i] > input[j])
+				dp[i] = (dp[j] + 1 > dp[i]) ? dp[j] + 1 : dp[i];
+		}
+		maxLen = (dp[i] > maxLen) ? dp[i] : maxLen;
+	}
+
+	cout << maxLen;
+}
+
+int main() {
+	
+	cin >> N;
+	for (int i = N; i >= 1; i--)
+		cin >> input[i];
+
+	solve();
+
+	return 0;
+}
+```
+
+결과는 성공 그런데 두 코드의 차이점을 모르겠다. print() 는 dp 값에 뭐가 들어갔는지 알아보기 위해 넣었던 것을 제외하면 차이점이라고는 방향밖에 없는데 이부분은 좀 더 찾아본 뒤 수정을 해야 할 것 같다.
+
+--- 수정
+
+그냥 내가 멍청했었다.. input 최대값을 1001로 설정을 했다면 범위는 0 ~ 1000 까지인데, 0 ~ 1001 번까지 생긴다고 생각하고 있었던 문제였다.

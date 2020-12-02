@@ -1,0 +1,93 @@
+---
+layout: post
+title:  "BOJ 14889"
+date:   2019-12-26 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm BruteForce
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+#include <vector>
+#include <cmath>
+
+using namespace std;
+
+int N;
+int map[20][20], pick[10], pick2[10];
+int minNum = 100;
+
+void mk_Team() {
+
+	bool visited[20];
+	int index = 0;
+
+	for (int i = 0; i < 20; i++)
+		visited[i] = false;
+
+	for (int i = 0; i < N / 2; i++)
+		visited[pick[i]] = true;
+
+	for (int i = 0; i < N; i++) 
+		if (!visited[i]) pick2[index++] = i;
+
+}
+
+void solve(int depth, int cnt)
+{
+	if (cnt == N / 2) {
+
+		int team1 = 0, team2 = 0;
+
+		mk_Team();
+		for (int i = 0; i < N / 2; i++) {
+			
+			for (int j = i + 1; j < N / 2; j++) {
+				team1 += map[pick[i]][pick[j]];
+				team1 += map[pick[j]][pick[i]];
+				team2 += map[pick2[i]][pick2[j]];
+				team2 += map[pick2[j]][pick2[i]];
+			}
+		}
+
+		minNum = minNum > abs(team2 - team1) ? abs(team2 - team1) : minNum;
+
+		return;
+	}
+	else if (depth == N) return;
+	
+	pick[cnt] = depth;
+	solve(depth + 1, cnt + 1); // select
+	pick[cnt] = 0;
+
+	solve(depth + 1, cnt); // not select
+	
+}
+
+
+int main() {
+
+	cin >> N;
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+			cin >> map[i][j];
+		}
+	}
+
+	solve(0,0);
+	cout << minNum << "\n";
+	return 0;
+}
+```
+
+#### 구현
+
+DFS 를 이용하여 구현하였는데, 기저사례에서 team2 를 생성해서 구현하는 것은 비효율적이라고 생각했지만 마땅한 방법이 생각나지 않았다.
+
+- pick 배열을 생성하여 DFS를 통해 조합을 구현하였다.
+
+- mk_Team 함수에서 pick에 넣어진 수들을 `visited = true` 로 하여 방문하지 않은 수들을 순회하여 pick2 배열을 생성하여 기저 사례에서 순차적으로 방문하며 있는 수들을 더해주었다.
+
+- map 에 있는 수 중 가장 큰 숫자 값이 100이기 때문에, 처음에 초기화를 100으로 해주었다.

@@ -1,0 +1,44 @@
+---
+layout: post
+title:  "BOJ 1904"
+date:   2019-11-02 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm DynamicProgramming 동적계획법
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+
+using namespace std;
+
+int N;
+int dp[1000001];
+
+void solve() {
+
+	dp[1] = 1;
+	dp[2] = 2;
+	dp[3] = 3;
+	dp[4] = dp[2] + dp[3];
+	for (int i = 5; i <= N; i++) {
+
+		dp[i] = dp[i - 2] + dp[i - 1];
+		if (dp[i] > 15746) dp[i] %= 15746;
+	}
+	cout << dp[N];
+}
+
+int main() {
+
+	cin >> N;
+	solve();
+
+	return 0;
+}
+```
+
+일반적으로 2진법의 경우 앞의 수가 추가 되면, 그 전 index자릿수의 경우의 수에서 제일 앞자리가 1과 0인 경우의 수가 추가되는 것이므로 2를 곱해주면 끝이지만, 이문제에서는 00 과 1 이기 때문에
+
+00의 경우 자릿수 - 2 인 곳과 1의 경우 자릿수 -1 인곳을 더해서 배열을 생성하는 문제이다.

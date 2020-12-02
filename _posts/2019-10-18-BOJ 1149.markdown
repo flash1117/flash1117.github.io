@@ -1,0 +1,55 @@
+---
+layout: post
+title:  "BOJ 1149"
+date:   2019-10-18 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm DynamicProgramming 동적계획법
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+int N;
+int map[1001][4];
+int dp[1001][4];
+
+int solve() {
+
+	for (int i = 1; i <= N; i++) {
+
+		dp[i][1] = min(dp[i - 1][2], dp[i - 1][3]) + map[i][1];
+		dp[i][2] = min(dp[i - 1][1], dp[i - 1][3]) + map[i][2];
+		dp[i][3] = min(dp[i - 1][1], dp[i - 1][2]) + map[i][3];
+		
+	}
+
+	int temp = min(dp[N][1], dp[N][2]);
+	temp = min(temp, dp[N][3]);
+
+	return temp;
+}
+
+
+int main() {
+
+	cin >> N;
+	for (int i = 1; i <= N; i++)
+		for (int j = 1; j <= 3; j++)
+			cin >> map[i][j];
+
+	cout << solve();
+
+	return 0;
+}
+```
+
+처음 식을 세울 때, for문 안에서 j를 어떻게 써야하는지 그리고 전에 페인트 칠을 한 지붕을 어떻게 체크할지 한참 생각 했었다.
+
+하지만 주어진 문제에서 지붕은 3개이며 굳이 j를 사용 할 필요가 없었다..
+
+for 문안에 N번 순회하면서 각각 해당하는 경우를 직접 넣어 주었고 마지막에 크기 비교만 해주니 풀어지는 간단한 문제였다.

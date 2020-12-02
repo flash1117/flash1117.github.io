@@ -1,0 +1,73 @@
+---
+layout: post
+title: "BOJ 12015"
+date: 2020-04-02 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags: Algorithm binaryTree
+cover: "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+vector<long long> vec;
+
+void print() {
+
+	for (auto iter = vec.begin(); iter != vec.end(); iter++) {
+		cout << *iter << " ";
+	}
+	cout << "\n";
+
+}
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	int N;
+	auto iter = vec.begin();
+
+	cin >> N;
+	for (int i = 0; i < N; i++) {
+		long long input;
+		cin >> input;
+
+		if (vec.empty()) vec.push_back(input);
+		else {
+
+			if (vec.back() < input) vec.push_back(input);
+			else if (vec.back() > input && vec[vec.size() - 2] < input) {
+				vec.back() = input;
+			}
+			else if (vec.back() == input);
+			else {
+
+				iter = lower_bound(vec.begin(), vec.end(), input);
+				*iter = input;
+
+			}
+
+		}
+
+//		print();
+	}
+
+	cout << vec.size() << "\n";
+
+	return 0;
+}
+
+```
+
+해당 문제에서 고려해야 할 포인트는 3가지이다.
+
+1. input이 입력받았을 때 제일 마지막의 수와 비교하여 큰 경우 -> 추가로 삽입
+2. input이 제일 마지막의 수보다 작고 마지막 -1 위치의 수와 비교 했을 때 큰경우 -> 맨 마지막 요소를 현재 input으로 swap
+3. 그렇지 않은 경우 -> `lower_bound` 로 input의 위치를 찾고 그 위치에 삽입

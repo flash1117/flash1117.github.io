@@ -1,0 +1,64 @@
+---
+layout: post
+title:  "BOJ 1251"
+date:   2020-01-14 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm BruteForce
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+#include <algorithm>
+#include <string>
+#include <vector>
+using namespace std;
+
+vector<char> vec;
+int pick[4];
+vector <string> ret;
+
+void dfs(int depth, int cnt) {
+
+	if (depth > vec.size()) return;
+	else if (cnt == 3) {
+
+		string temp = "";
+		for (int i = pick[1] - 1; i >= 0; i--) 
+			temp.push_back(vec[i]);
+		for (int i = pick[2] - 1; i >= pick[1]; i--)
+			temp.push_back(vec[i]);
+		for (int i = vec.size() - 1; i >= pick[2]; i--)
+			temp.push_back(vec[i]);
+		
+		ret.push_back(temp);
+		return;
+	}
+
+	pick[cnt] = depth;
+	dfs(depth + 1, cnt + 1);
+	pick[cnt] = 0;
+
+	dfs(depth + 1, cnt);
+
+}
+
+int main() {
+
+	string input;
+	cin >> input;
+	for (int i = 0; i < input.size(); i++)
+		vec.push_back(input[i]);
+
+	dfs(0, 0);
+	sort(ret.begin(), ret.end());
+	cout << ret[0] << "\n";
+
+	return 0;
+}
+```
+
+#### 구현
+
+- 영역을 나누기 위해서 재귀로 조합을 구현하였다. 3가지의 단어를 나누어서 각자 뒤집으면 되는 문제라 뒤집을 bound를 pick에 넣어서 `cnt = 3` 을 만족했을 때 각 순서에 맞도록 뒤집은 뒤 sort 함수를 이용하여 정렬 한뒤 제일 앞쪽으로 온 문자열을 출력했다.

@@ -1,0 +1,57 @@
+---
+layout: post
+title:  "2020-05-20 TIL"
+date:   2020-05-20 13:00:59
+author: mollangzzang
+categories: TIL
+tags:	TIL css
+cover:  "/assets/TIL.png"
+---
+
+#### float 효과
+
+- 이미지와 같은 것을 삽화로 삽입할 때, 책에서 이미지를 보는 것과 같이 그림 옆에 짤막하게 글을 삽입하면서 자연스럽게 글을 써내려 갈 수 있게 해주는 효과를 줄 수 있다.
+
+- 하지만 단락이 2개이상일 경우 하나는 그림 옆에 삽입하고, 나머지 하나는 그림의 밑에 글을 배치하고 싶을 때 `<tag명 style="clear:both;>"` 와 같이 구현을 한다.
+
+- 최근에는 flex를 사용하지만 과거에는 float로 레이아웃을 구성하기도 했다.
+
+#### multi column
+
+- 한줄에 너무 긴 글을 나열하면 글을 읽는데 지치기 때문에 신문과 같은 사설처럼 여러 단락으로 나누는 기법.
+
+- 내용을 class 로 선언을 하였다면
+
+```
+.column{
+        text-align: justify;
+        column-count: 4;
+/*        column-width: 200px;*/
+        column-gap:30px;
+        column-rule-style: solid;
+        column-rule-width: 5px;
+        column-rule-color: red;
+      }
+```
+
+와 같은 코드를 통하여 여러 단락으로 나누는 것이 가능하다.
+
+#### background
+
+- 배경에 관련된 속성들
+
+- `background-color: tomato;` 그림의 색상을 설정
+
+- `background-image: url('image.png');` 이미지를 불러올 url
+
+- `background-repeat: no-repeat;` 이미지를 반복할 것인지 여부
+
+- `background-attachment: fixed;` 그림을 고정 시킬 것인지 (스크롤에 따라 움직일 것인지 아닌지의 여부)
+
+- `background-position: left top` 그림의 position을 설정 (x,y) 의 좌표인 것 같다.
+
+- 이것또한 축약형이 있어서 `background : tomato url('image.png') no-repeat fixed center;` 처럼 선언을 한다면 훨씬 수월하게 코드 작성이 가능하다.
+
+#### filter
+
+- 원본의 파일을 건드리지 않고 코드를 통해 필터의 기능을 실행하는 것.

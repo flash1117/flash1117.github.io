@@ -1,0 +1,153 @@
+---
+layout: post
+title:  "BOJ 16234"
+date:   2020-01-14 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm BruteForce
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+#include <queue>
+using namespace std;
+
+bool state = true;
+int N, L, R;
+int map[50][50];
+bool visited[50][50];
+int dx[] = { 0,0,-1,1 };
+int dy[] = { -1,1,0,0 };
+
+bool isBoundary(int x, int y) {
+
+	if (x<0 || y<0 || x>N - 1 || y>N - 1) return false;
+	return true;
+}
+
+bool canMove(int x, int y) {
+
+	for (int i = 0; i < 4; i++) {
+		int nextX = x + dx[i];
+		int nextY = y + dy[i];
+		int dif = map[x][y] - map[nextX][nextY];
+		dif = dif > 0 ? dif : -dif;
+
+		if (isBoundary(nextX, nextY) && dif >= L && dif <= R) return true;
+	}
+
+	return false;
+}
+
+void print() {
+
+	cout << endl;
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+			cout << map[i][j] << " ";
+		}
+		cout << endl;
+	}
+	
+}
+
+void initArray() {
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+			visited[i][j] = false;
+		}
+	}
+}
+
+void BFS(int x, int y) {
+
+	queue <pair<int, int>> q;
+	queue <pair<int, int>> country;
+	int sum = 0;
+
+	q.push({ x,y });
+	visited[x][y] = true;
+
+	while(!q.empty()){
+		int curX = q.front().first;
+		int curY = q.front().second;
+
+		country.push(q.front());
+		sum += map[curX][curY];
+		q.pop();
+
+		for (int i = 0; i < 4; i++) {
+			int nextX = curX + dx[i];
+			int nextY = curY + dy[i];
+			int dif = map[curX][curY] - map[nextX][nextY];
+			dif = dif > 0 ? dif : -dif;
+
+			if (isBoundary(nextX, nextY) && dif >= L && dif <= R && !visited[nextX][nextY]) {
+
+				q.push({ nextX, nextY });
+				visited[nextX][nextY] = true;
+			}
+		}
+	
+	}
+
+	if (country.size() == 1) {
+		country.pop();
+	}
+	else {
+		state = true;
+		int peopleCnt = sum / country.size();
+		int Size = country.size();
+		for (int i = 0; i < Size; i++) {
+			map[country.front().first][country.front().second] = peopleCnt;
+			country.pop();
+		}
+	}
+}
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
+	int ret = 0;
+	cin >> N >> L >> R;
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+			cin >> map[i][j];
+		}
+	}
+	int cnt = 0;
+	while (state) {
+
+		state = false;
+
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < N; j++) {
+
+				if (canMove(i, j) && !visited[i][j]) {
+					BFS(i, j);	
+				}
+
+			}
+		}
+		ret++;
+		initArray();
+	}
+
+	cout << ret-1 << "\n";
+	return 0;
+}
+```
+
+#### 구현
+
+- BFS 가 가능한지의 여부를 미리 조사 한뒤, BFS를 돌렸다.
+
+- 서로의 영역을 확립 한뒤, 영향을 끼치지 않게 하기 위해서 visited 를 사용하였다.
+
+- 인구 이동이 일어나지 않을 때까지 계속 인구 이동이 일어나야 하기에 state 라는 bool 변수를 선언하여 인구이동이 없으면 while 문을 탈출하도록 구현하였다.
+
+#### 실수한 부분
+
+- 하루 마다 인구 이동이 일어 날 수 있는 구역을 각각 설정한 뒤 돌리는 것이 아니라 순차적으로 돌려서 처음 이동한 나라가 BFS를 빠져나왔을 때 다시 영향을 미칠 수 있도록 구현을 했었다. 그러면 테스트케이스 5번에서는 6이라는 결과를 얻게 되는데, 이렇게 하면 안되고 **처음 부터 영역을 설정한 뒤 각각 BFS를 돌려서 결과값을 얻어야 한다.** 이해가 잘 가지 않는 다면, 몇일이 걸렸는지를 출력한다고 생각해봐도 좋을 것 같다.
+

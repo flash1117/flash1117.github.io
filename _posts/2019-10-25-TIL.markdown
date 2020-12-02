@@ -1,0 +1,104 @@
+---
+layout: post
+title:  "Java 문법"
+date:   2019-10-25 13:00:59
+author: mollangzzang
+categories: TIL
+tags:	TIL Java
+cover:  "/assets/TIL.png"
+---
+
+#### Java Data Type
+
+- **기본형 (Primitive Type)**
+
+    - boolean, char, byte, short, int, long, float, double
+    - 실제 값을 저장하게 됨
+
+- **참조형 (Reference Type)**
+
+    - 기본형을 제외한 나머지로 String, System 등이 있다.
+    - 객체의 주소를 저장한다. (4 byte)
+
+#### 변수의 선언 방법
+
+`int score = 100;`
+`String str = new String("abc");`
+`str = null`
+
+#### 변수 명명 규칙 (Naming Convention)
+
+1. 대소문자가 구분되며 길이에 제한이 없다.
+    - True 와 true는 서로 다른 것
+
+2. 예약어 (Reserved word) 를 사용해서는 안된다.
+    - true 는 예약서라 사용할 수 없지만, True는 가능하다.
+
+3. 숫자로 시작해서는 안된다.
+
+4. 특수문자는 **_** 와 **$** 만을 허용한다.
+
+#### 주의 해야 할 연산자 우선순위
+
+1. `<< , >> , >>>` 는 덧셈 연산자 보다 우선 순위가 낮다.
+
+2. ||, | (OR) 는 &&, &(AND) 보다 우선순위가 낮다
+
+#### 이항연산자의 특징
+
+- 이항연산자는 연산을 수행하기 전에 피연산자의 타입을 일치시킨다.
+
+- 크기가 int보다 작은 타입은 int로 변환한다.
+    - byte, char, short -> int
+
+- 피연산자 중 표현범위가 큰 타입으로 형변환한다.
+
+ #### 나머지 연산자
+
+ - 홀수 짝수 등의 배수검사에 주로 사용하며
+ 
+ - ` 10 % 8 = 2 , 10 % -8 = 2 , -10 % 8 = -2 , -10 % 8 = -2 `
+
+ #### Shift 연산자
+
+ - 2^n 으로 곱하거나 나눈 결과를 반환한다.
+
+ - 곱셈 , 나눗셈보다 빠르다.
+
+- `x<<n` 은 `x * 2^n` 과 같다.
+- `x>>n` 은 `x / 2^n` 과 같다.
+
+#### 비트 연산자
+
+- 피연산자를 비트단위로 연산하며 실수형을 제외한 모든 기본형에 사용이 가능하다.
+
+- OR 연산자 ( | ) : 피연산자 중 어느 한 쪽이 1이면 1이다.
+- AND 연산자 ( & ) : 피연산자 중 양 쪾 모두 1이면 1이다.
+- XOR 연산자 ( ^ ) : 피연산자 서로 다를 때 1이다.
+
+#### Math 클래스
+
+- `Math.round()` : 소수점 첫째자리에서 반올림한 값을 반환
+
+- `Math.random()` : 난수 생성기로 0.0이상 ~ 1.0미만 사이의 double 값을 반환한다. 
+
+#### 이름이 붙은 반복문과 break, continue
+
+- 반복문 앞에 이름을 붙이고, 그 이름을 break, continue 와 같이 사용함으로써 둘 이상의 반복문을 벗어나거나 건너 뛰는 것이 가능하다.
+
+```
+class Example
+{
+    public static void main(String[] args) {
+
+        Loop1 : for(int i =2; i<=9; i++) {
+
+            for(int j =1; j<9 ; j++){
+                if(j ==5) break Loop1;
+            }
+        }
+
+    }
+}
+```
+ 

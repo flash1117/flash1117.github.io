@@ -1,0 +1,108 @@
+---
+layout: post
+title:  "BOJ 1010"
+date:   2019-11-08 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm DynamicProgramming 동적계획법
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+
+using namespace std;
+
+#define Endl "\n"
+
+int T, src, dst;
+int dp[31][31];
+
+void print() {
+
+	for (int i = 0; i <= 30; i++) {
+
+		for (int j = 0; j <= i; j++) {
+			cout << dp[i][j] << " ";
+		}
+		cout << Endl;
+	}
+}
+
+void solve() {
+
+	for (int i = 0; i <= 30; i++) {
+		dp[i][i] = 1;
+		dp[i][0] = 1;
+	}
+
+	for (int i = 1; i <= 30; i++) {
+		for (int j = 1; j <= i/2+1; j++) {
+
+			dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
+			dp[i][i - j] = dp[i][j];
+
+		}
+	}
+		
+
+}
+
+int main() {
+
+	cin >> T;
+	solve();
+	while (T--) {
+
+		cin >> src >> dst;
+		printf("%d\n", dp[dst][src]);
+	}
+
+
+	return 0;
+}
+```
+
+대놓고 조합을 구현하라는 문제이다.
+T 의 범위가 문제에 주어져있지 않은 것 같아서 dp로 구현했다.
+
+그런데 생각해보면 T의 경우의 수라고 해봐야 1부터 30까지 더한 것이 최대값이라서 재귀 또는 반복문으로 조합을 구현하는게 속도가 더 빠를 것 같다.
+
+```
+#include <stdio.h>
+
+int main() {
+
+    int T=0;
+    scanf("%d", &T);
+    while(T--) {
+        int N, M;
+        scanf("%d %d", &N, &M);
+        int comb = 1;
+        for(int i=0; i<N; i++)
+            comb = comb * (M-i) /(i+1);
+        printf("%d\n", comb);
+    }
+
+    return 0;
+}
+```
+
+```
+#include <stdio.h>
+
+int Comb(int src ,int dst) {
+    return src == dst ? 1 : dst == 1 ? src : src*Comb(src-1, dst-1)/dst;
+}
+
+int main() {
+
+    int N, M ,T;
+    for(scanf("%d", &T); T--;) {
+        scanf("%d %d", &N, &M);
+        printf("%d\n", Comb(dst, src));
+    }
+}
+```
+
+제일 아래 코드는 재귀함수를 짠 부분이 너무 신기해서 들고 온 코드인데, 삼항 연산자를 저렇게 사용할 수 있다는 걸 처음알았다.

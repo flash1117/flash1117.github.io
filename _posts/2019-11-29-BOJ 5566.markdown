@@ -1,0 +1,66 @@
+---
+layout: post
+title:  "BOJ 5566"
+date:   2019-11-29 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags:	Algorithm Simulation
+cover:  "/assets/algorithm.png"
+---
+
+```
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int N, M;
+vector <int> instruction;
+vector <int> dice;
+
+int solve() {
+
+	int ret = 0;
+	int cur = 0;
+	for (int i = 0; i < dice.size(); i++) {
+
+		if (cur >= N - 1) return ret;
+		else {
+
+			cur += dice[i];
+			ret++;
+			if (cur >= N - 1) return ret;
+			else {
+				if (cur >= 1) cur += instruction[cur];
+				if (cur < 0) cur = 0;
+			}
+		}
+	}
+	return ret;
+}
+
+int main() {
+
+	int temp;
+	cin >> N >> M;
+
+	for (int i = 0; i < N; i++) {
+		cin >> temp;
+		instruction.push_back(temp);
+	}
+	for (int i = 0; i < M; i++) {
+		cin >> temp;
+		dice.push_back(temp);
+	}
+
+	cout << solve() << "\n";
+	return 0;
+}
+```
+
+#### 구현
+
+- 주사위를 굴리고, 이동한 칸에 존재하는 숫자만큼 추가로 이동을 하는데 문제이다.
+
+- 주사위를 굴렸을때, 지시사항을 이행하기 전에 먼저 골에 도달하는 경우의 수가 있을까봐 for 문의 else 구문 안에 return 조건을 한번 더 넣었었는데, 문제에서 첫번째 칸과 마지막 칸의 지시사항은 0이기 때문에 사실상 필요가 없는 코드이다.
+
+- 보드게임이기 때문에 지시사항을 이행했을때, 음수의 영역으로 떨어지게 된다면 처음칸으로 위치를 초기화 시켜주었다.

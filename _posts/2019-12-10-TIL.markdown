@@ -1,0 +1,31 @@
+---
+layout: post
+title:  "2019-12-10-TIL"
+date:   2019-12-10 13:00:59
+author: mollangzzang
+categories: TIL
+tags:	TIL C++
+cover:  "/assets/TIL.png"
+---
+
+C 에서는 .6f 와 같은 방식으로 소수점으로 표시했던 것 같은데, C++로 알고리즘 문제를 풀면서 소수점을 다루는 방법을 모른다는 사실을 깨달았다. (푼 문제가 몇갠데..) 뒤늦게 부랴부랴 찾아봤고, 여러가지 방법이 있었지만 
+
+```
+#include <iostream>
+using namespace std;
+
+const double pi = 3.14159265358979323846;
+
+int main() {
+	double R = 0.0;
+	cin >> R;
+	cout << fixed;
+	cout.precision(6);
+
+	cout << R * R * pi << endl;
+	cout << R * R * 2 << endl;
+	return 0;
+}
+```
+
+`cout << fixed` 를 선언한뒤 `precision` 함수를 이용하여 몇자리까지 출력되게 할 것인지 지정해주는 것이다. 위 코드에서는 다시 정밀화를 해제하는 과정이 없는데, 따로 해줘야 한다는 것 같기도 하니 추가로 더 공부를 해봐야 할 것 같다.

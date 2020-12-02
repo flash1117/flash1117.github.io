@@ -1,0 +1,35 @@
+---
+layout: post
+title:  "나머지 연산의 특징"
+date:   2019-10-31 13:00:59
+author: mollangzzang
+categories: TIL
+tags:	TIL Algorithm
+cover:  "/assets/TIL.png"
+---
+
+알고리즘 문제를 보다보면 정수의 범위가 커서 나머지 연산을 해야하는 경우가 종종 있는데, 이러한 문제를 풀다보면 애를 먹어서 나머지 연산의 특징을 확실하게 알기 위해 정리해보았다.
+
+- 나머지 연산은 기본적으로 결합, 분배, 교환법칙이 모두 성립하지 않는다. 그래서 계산시에 위치에 주의를 해야한다.
+
+1. (a + m) % m = a % m;
+2. ((a % m) + (b % m)) % m = (a + b) % m 
+3. ((a % m) * (b % m)) % m = (a * b) % m 
+
+순환하는 구조인 환형 큐 (Circular Queue) 의 경우에도 나머지 연산을 응용할 수 있는데,
+
+```
+int next_step(int now, int len, int count) {
+    return (now+count) % len;
+}
+```
+
+길이가 len 인 원형 판에서 now번 칸에 서 있을 때 count 칸 만큼 전진하면 서있게 되는 칸의 번호를 계산한 것이다.
+
+하지만 반대로 뒤로 count 수만큼 후진한 다면 음수로도 떨어질 수 있어서 계산하기 귀찮은 과정이 발생한다.
+
+```
+int back_step(int now, int len, int count) {
+    return (now - (count % len) + len) % len;
+}
+```

@@ -1,0 +1,86 @@
+---
+layout: post
+title: 'BOJ 13023'
+date: 2021-01-07 13:00:59
+author: mollangzzang
+categories: Algorithm
+tags: DFS
+cover: '/assets/algorithm.png'
+---
+
+```
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int N, M, answer;
+vector <int> friendRelation[2001];
+bool visited[2001];
+
+void solve(int nodeNumber, int cnt) {
+
+	if (cnt >= 4) {
+		answer = 1;
+		return;
+	}
+
+	visited[nodeNumber] = true;
+
+	for (int i = 0; i < friendRelation[nodeNumber].size(); i++) {
+
+		int nextNodeNumber = friendRelation[nodeNumber][i];
+		if (!visited[nextNodeNumber]) {
+			visited[nextNodeNumber] = true;
+			solve(nextNodeNumber, cnt + 1);
+			visited[nextNodeNumber] = false;
+		}
+
+		if (answer == 1) return;
+
+	}
+
+	visited[nodeNumber] = false;
+
+	return;
+}
+
+int main() {
+
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	cin >> N >> M;
+
+	int src, dst;
+	for (int i = 0; i < M; i++) {
+
+		cin >> src >> dst;
+		friendRelation[src].push_back(dst);
+		friendRelation[dst].push_back(src);
+
+	}
+
+	for (int i = 0; i < N; i++) {
+
+		solve(i, 0);
+		if (answer == 1) {
+			cout << 1 << "\n";
+			return 0;
+		}
+	}
+
+	cout << 0 << "\n";
+
+	return 0;
+}
+
+```
+
+![13023 boj](https://user-images.githubusercontent.com/33343785/103824502-66457f80-50b7-11eb-9714-82f5ae1886af.png)
+
+처음에 문제를 읽었을 때 친구들 모두 서로가 아는지의 여부를 물어보는 줄 알았다. 하지만 주어지는 문제의 예제를 읽어보면 그게 아니라는 것을 알 수 있는데, 단순히 한 노드에서 4번째의 depth를 가지면 1을 리턴하고 아니라면 0을 리턴하는 문제라는 것을 알 수 있다.
+
+따라서 처음에 BFS나 union find를 생각했지만 그냥 모든 노드를 순회하면서 재귀 방식으로 탐색하는 것으로 문제를 풀기로 정했다.
+
+친구 관계이기 때문에 양방향 그래프를 만들어주는 것이 중요하고, 재귀 탐색을 하면서 visited만 제대로 체크한다면 틀릴 문제는 아닌 것 같다.
